@@ -17,15 +17,15 @@ const nextFixture = allFixtures
   .sort((a, b) => a.data.date.localeCompare(b.data.date))[0]?.data;
 
 const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/news', label: 'News' },
-  { href: '/fixtures', label: 'Fixtures' },
-  { href: '/teams', label: 'Teams' },
-  { href: '/club', label: 'Club Info' },
-  { href: '/fans', label: 'Fans & Visitors' },
-  { href: '/welfare', label: 'Welfare & Policies' },
-  { href: '/shop', label: 'Shop' },
-  { href: '/sponsors', label: 'Sponsors' },
+  { href: '/rfc-astro', label: 'Home' },
+  { href: '/rfc-astro/news', label: 'News' },
+  { href: '/rfc-astro/fixtures', label: 'Fixtures' },
+  { href: '/rfc-astro/teams', label: 'Teams' },
+  { href: '/rfc-astro/club', label: 'Club Info' },
+  { href: '/rfc-astro/fans', label: 'Fans & Visitors' },
+  { href: '/rfc-astro/welfare', label: 'Welfare & Policies' },
+  { href: '/rfc-astro/shop', label: 'Shop' },
+  { href: '/rfc-astro/sponsors', label: 'Sponsors' },
 ];
 
 const currentPath = Astro.url.pathname;
