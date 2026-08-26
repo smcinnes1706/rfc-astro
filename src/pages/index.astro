@@ -1,0 +1,197 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { sponsors } from '../data/sponsors';
+import { teamLabel, teamBadgeClass } from '../utils/team';
+
+const today = new Date();
+const todayStr = today.toISOString().slice(0, 10); // "YYYY-MM-DD"
+
+const allFixtures = await getCollection('fixtures');
+allFixtures.sort((a, b) => a.data.date.localeCompare(b.data.date));
+
+const allNews = await getCollection('news');
+allNews.sort((a, b) => b.data.date.localeCompare(a.data.date));
+const latestNews = allNews.slice(0, 3);
+
+const nextFixture = allFixtures.find(f => !f.data.result && f.data.date >= todayStr)?.data;
+const lastResult = allFixtures
+  .filter(f => !!f.data.result)
+  .sort((a, b) => b.data.date.localeCompare(a.data.date))[0]?.data;
+
+function formatDate(dateStr: string) {
+  return new Date(dateStr).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+}
+
+function resultClass(result: string, isHome: boolean) {
+  const [h, a] = result.split('-').map(Number);
+  const rfc = isHome ? h : a;
+  const opp = isHome ? a : h;
+  if (rfc > opp) return 'result-win';
+  if (rfc === opp) return 'result-draw';
+  return 'result-loss';
+}
+
+const categoryLabel: Record<string, string> = {
+  'match-report': 'Match Report',
+  'club-news': 'Club News',
+  'juniors': 'Juniors',
+};
+
+// Place your hero image in public/images/ and set the path here.
+// e.g. '/images/hero.jpg' — leave as null to use the default gradient.
+const heroImage: string | null = '/images/home-hero.avif';
+---
+<Layout title="Home">
+  <!-- Hero image with fixture overlay -->
+  {heroImage && (
+    <div class="container" style="padding-top:1.5rem; padding-bottom:0; position:relative; line-height:0;">
+      <img
+        src={heroImage}
+        alt="Rotherfield FC"
+        style="width:100%; max-height:480px; object-fit:cover; object-position:center; display:block; border-radius:10px;"
+      />
+      {nextFixture && (
+        <div class="hero-badge hero-badge--overlay">
+          <p class="fixture-label">Next Fixture</p>
+          <p class="fixture-date">{formatDate(nextFixture.date)} · {nextFixture.time}</p>
+          <p class="fixture-teams">
+            {nextFixture.isHome ? <strong>RFC</strong> : nextFixture.homeTeam}<br />
+            vs<br />
+            {nextFixture.isHome ? nextFixture.awayTeam : <strong>RFC</strong>}
+          </p>
+          <p class="fixture-comp">{nextFixture.competition}</p>
+        </div>
+      )}
+    </div>
+  )}
+
+  {!heroImage && nextFixture && (
+    <div class="container" style="padding-top:1.5rem; padding-bottom:0;">
+      <div class="hero-badge hero-badge--standalone">
+        <p class="fixture-label">Next Fixture</p>
+        <p class="fixture-date">{formatDate(nextFixture.date)} · {nextFixture.time}</p>
+        <p class="fixture-teams">
+          {nextFixture.isHome ? <strong>RFC</strong> : nextFixture.homeTeam}<br />
+          vs<br />
+          {nextFixture.isHome ? nextFixture.awayTeam : <strong>RFC</strong>}
+        </p>
+        <p class="fixture-comp">{nextFixture.competition}</p>
+      </div>
+    </div>
+  )}
+
+  <!-- Welcome / club intro -->
+  <section class="section" style="padding-bottom:0;">
+    <div class="container">
+      <div style="border-left:4px solid var(--green-mid); padding-left:1.5rem;">
+        <h1 style="font-size:clamp(1.6rem,3vw,2.2rem); margin-bottom:0.6rem;">Welcome to Rotherfield Football Club</h1>
+        <p style="color:var(--grey-mid); font-size:1rem; line-height:1.75;">
+          Est. 1893 — The Greens. Based at Rotherfield Recreation Ground, North Street, TN6 3LX.
+          A community club with junior groups from Reception to Year 13, adult teams competing in the
+          Gray Hooper Holt Mid Sussex Football League, and a Veterans side in the Sussex Sunday League.
+          Football for all, in the heart of the village.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest News -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header section-header--flex">
+        <div>
+          <h2>Latest News</h2>
+          <p>Match reports, club updates and more</p>
+        </div>
+        <a href="/news" class="btn btn--outline">All News →</a>
+      </div>
+      <div class="news-grid">
+        {latestNews.map(entry => (
+          <article class="news-card">
+            {entry.data.image
+              ? <img src={entry.data.image} alt={entry.data.title} class="news-card__img" style="height:180px;object-fit:cover;width:100%;" />
+              : <div class="news-card__img">⚽</div>
+            }
+            <div class="news-card__body">
+              <div class="news-card__meta">
+                <span class={`badge ${entry.data.category === 'match-report' ? 'badge--green' : entry.data.category === 'juniors' ? 'badge--gold' : 'badge--grey'}`}>
+                  {categoryLabel[entry.data.category]}
+                </span>
+                {entry.data.team && (
+                  <span class={`badge ${teamBadgeClass[entry.data.team]}`}>{teamLabel[entry.data.team]}</span>
+                )}
+                <span class="news-card__date">{formatDate(entry.data.date)}</span>
+              </div>
+              <h3 class="news-card__title"><a href={`/news/${entry.id}`}>{entry.data.title}</a></h3>
+              <p class="news-card__excerpt">{entry.data.excerpt}</p>
+              <a class="news-card__link" href={`/news/${entry.id}`}>Read more →</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Last Result + Next Fixture side by side -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="info-split">
+        {lastResult && (
+          <div class="info-card">
+            <h3>Last Result</h3>
+            <p style="color: var(--grey-mid); font-size: 0.8rem; margin-bottom: 0.75rem;">
+              {formatDate(lastResult.date)} · {lastResult.competition}
+            </p>
+            <p style="font-size: 1.05rem; font-weight: 700; margin-bottom: 0.4rem;">
+              {lastResult.homeTeam} <span class={resultClass(lastResult.result!, lastResult.isHome)}>{lastResult.result}</span> {lastResult.awayTeam}
+            </p>
+            <p style="font-size: 0.8rem; color: var(--grey-mid);">{lastResult.venue}</p>
+            <a href="/fixtures" style="display:inline-block; margin-top: 1rem;" class="btn btn--primary">All Results →</a>
+          </div>
+        )}
+        {nextFixture && (
+          <div class="info-card">
+            <h3>Next Fixture</h3>
+            <p style="color: var(--grey-mid); font-size: 0.8rem; margin-bottom: 0.75rem;">
+              {formatDate(nextFixture.date)} · {nextFixture.time} · {nextFixture.competition}
+            </p>
+            <p style="font-size: 1.05rem; font-weight: 700; margin-bottom: 0.4rem;">
+              {nextFixture.homeTeam} vs {nextFixture.awayTeam}
+            </p>
+            <p style="font-size: 0.8rem; color: var(--grey-mid);">{nextFixture.venue}</p>
+            <a href="/fixtures" style="display:inline-block; margin-top: 1rem;" class="btn btn--primary">All Fixtures →</a>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- Sponsors -->
+  <div class="cta-bar">
+    <div class="container" style="padding-bottom:0.5rem;">
+      <h2>Our Sponsors</h2>
+    </div>
+    <div class="sponsors-carousel" aria-label="Sponsors" role="marquee">
+      <div class="sponsors-track">
+        {[...sponsors, ...sponsors].map((s, i) => (
+          <a
+            href={s.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="sponsor-logo sponsor-logo--dark"
+            tabindex={i >= sponsors.length ? -1 : 0}
+            aria-hidden={i >= sponsors.length ? 'true' : undefined}
+          >
+            {s.name}
+          </a>
+        ))}
+      </div>
+    </div>
+    <div class="container" style="padding-top:0.75rem; padding-bottom:0;">
+      <p style="font-size:0.8rem; color:rgba(255,255,255,0.6); text-align:center;">
+        <a href="/sponsors" style="color:rgba(255,255,255,0.85); font-weight:600;">View all sponsors →</a>
+      </p>
+    </div>
+  </div>
+</Layout>

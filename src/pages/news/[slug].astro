@@ -1,0 +1,64 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection, render } from "astro:content";
+import { teamLabel, teamBadgeClass } from "../../utils/team";
+
+export async function getStaticPaths() {
+  const allNews = await getCollection("news");
+  return allNews.map(entry => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const categoryLabel = {
+  "match-report": "Match Report",
+  "club-news": "Club News",
+  "juniors": "Juniors",
+};
+
+function formatDate(dateStr) {
+  return new Date(dateStr).toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+}
+---
+<Layout title={entry.data.title} description={entry.data.excerpt}>
+  <div class="page-hero">
+    <div class="container">
+      <p style="font-size:0.8rem; opacity:0.7; margin-bottom:0.5rem;">
+        <a href="/news" style="color:white; text-decoration:underline; text-underline-offset:2px;">← News</a>
+      </p>
+      <h1>{entry.data.title}</h1>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="article-body">
+        {entry.data.image && (
+          <img
+            src={entry.data.image}
+            alt={entry.data.title}
+            style="width:100%; max-height:420px; object-fit:cover; border-radius:var(--radius); margin-bottom:1.75rem;"
+          />
+        )}
+        <div class="article-meta">
+          <span class={`badge ${entry.data.category === "match-report" ? "badge--green" : entry.data.category === "juniors" ? "badge--gold" : "badge--grey"}`}>
+            {categoryLabel[entry.data.category]}
+          </span>
+          {entry.data.team && (
+            <span class={`badge ${teamBadgeClass[entry.data.team]}`}>{teamLabel[entry.data.team]}</span>
+          )}
+          <span>{formatDate(entry.data.date)}</span>
+          <span>By {entry.data.author}</span>
+        </div>
+        <Content />
+        <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid var(--grey-light);">
+          <a href="/news" class="btn btn--outline">← Back to News</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

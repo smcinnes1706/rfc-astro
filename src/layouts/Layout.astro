@@ -1,0 +1,127 @@
+---
+import '../styles/global.css';
+import { getCollection } from 'astro:content';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Rotherfield Football Club — Est. 1893. Playing in the Gray Hooper Holt Mid Sussex Football League.' } = Astro.props;
+
+const today = new Date();
+const todayStr = today.toISOString().slice(0, 10);
+const allFixtures = await getCollection('fixtures');
+const nextFixture = allFixtures
+  .filter(f => !f.data.result && f.data.date >= todayStr)
+  .sort((a, b) => a.data.date.localeCompare(b.data.date))[0]?.data;
+
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/news', label: 'News' },
+  { href: '/fixtures', label: 'Fixtures' },
+  { href: '/teams', label: 'Teams' },
+  { href: '/club', label: 'Club Info' },
+  { href: '/fans', label: 'Fans & Visitors' },
+  { href: '/welfare', label: 'Welfare & Policies' },
+  { href: '/shop', label: 'Shop' },
+  { href: '/sponsors', label: 'Sponsors' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title} | Rotherfield FC</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- Skip to main content -->
+    <a class="sr-only" href="#main">Skip to main content</a>
+
+    <header class="site-header">
+      <div class="container">
+        <a href="/" class="site-logo">
+          <img src="/images/logo.avif" alt="Rotherfield FC crest" width="36" height="36" style="border-radius:50%;" />
+          <span class="club-name">
+            <span>Rotherfield FC</span>
+            <span>Est. 1893</span>
+          </span>
+        </a>
+
+        <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="siteNav" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
+        </button>
+
+        <nav class="site-nav" id="siteNav" role="navigation">
+          {navLinks.map(link => (
+            <a
+              href={link.href}
+              aria-current={currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href)) ? 'page' : undefined}
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <!-- Sponsors strip -->
+    <slot name="pre-footer" />
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="/" class="site-logo">
+              <img src="/images/logo.avif" alt="Rotherfield FC crest" width="36" height="36" style="border-radius:50%;" />
+              <span class="club-name">
+                <span>Rotherfield FC</span>
+                <span>Est. 1893</span>
+              </span>
+            </a>
+            <p>Rotherfield Football Club, founded in 1893. Based at Rotherfield Recreation Ground, North Street, Rotherfield, TN6 3LX.</p>
+          </div>
+          <div class="footer-col" style="text-align:center;">
+            <h4>Quick Links</h4>
+            <ul style="columns: 2; gap: 1rem; display: inline-block; text-align: left;">
+              {navLinks.map(link => <li><a href={link.href}>{link.label}</a></li>)}
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Contact</h4>
+            <ul>
+              <li><a href="mailto:enquiriesrfc1893@gmail.com">enquiriesrfc1893@gmail.com</a></li>
+              <li><a href="https://linktr.ee/rfc1893" target="_blank" rel="noopener noreferrer">Linktree / Social</a></li>
+              <li><a href="https://book.englandfootball.com/Wildcats/rotherfieldjunior0/Summary/e4f335f7-9cb8-4196-97a9-acd4aaa8c86f" target="_blank" rel="noopener noreferrer">Girls Wildcats Booking</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>&copy; {new Date().getFullYear()} Rotherfield Football Club. All rights reserved.</span>
+          <span>Website built with Astro &amp; hosted on GitHub Pages.</span>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const toggle = document.getElementById('navToggle');
+      const nav = document.getElementById('siteNav');
+      toggle?.addEventListener('click', () => {
+        const open = nav?.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', String(open));
+      });
+    </script>
+  </body>
+</html>

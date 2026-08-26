@@ -1,0 +1,57 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { sponsors } from '../data/sponsors';
+
+const mainSponsors = sponsors.filter(s => s.tier === 'main');
+const partnerSponsors = sponsors.filter(s => s.tier === 'partner');
+---
+<Layout title="Sponsors" description="The sponsors who support Rotherfield Football Club.">
+  <div class="page-hero">
+    <div class="container">
+      <h1>Our Sponsors</h1>
+      <p>Rotherfield FC is proud to be supported by these fantastic local and national businesses.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Main Sponsors</h2>
+        <p>Our principal partners whose support makes the club possible.</p>
+      </div>
+      <div class="sponsors-page-grid" style="grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); margin-bottom:3rem;">
+        {mainSponsors.map(s => (
+          <div class="sponsor-card" style="border-top: 4px solid var(--gold);">
+            <div style="font-size:1.5rem; margin-bottom:0.5rem;">⭐</div>
+            <h3>{s.name}</h3>
+            <a href={s.url} target="_blank" rel="noopener noreferrer">Visit website →</a>
+          </div>
+        ))}
+      </div>
+
+      <div class="section-header">
+        <h2>Club Partners</h2>
+        <p>We are grateful for the continued support of all our club partners.</p>
+      </div>
+      <div class="sponsors-page-grid">
+        {partnerSponsors.map(s => (
+          <div class="sponsor-card">
+            <div style="font-size:1.25rem; margin-bottom:0.5rem;">🤝</div>
+            <h3>{s.name}</h3>
+            <a href={s.url} target="_blank" rel="noopener noreferrer">Visit website →</a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-bar">
+    <div class="container">
+      <h2>Become a Sponsor</h2>
+      <p>Interested in partnering with Rotherfield FC? We'd love to hear from you.</p>
+      <a href="mailto:enquiriesrfc1893@gmail.com?subject=Sponsorship%20Enquiry" class="btn btn--white">
+        Get in Touch
+      </a>
+    </div>
+  </div>
+</Layout>

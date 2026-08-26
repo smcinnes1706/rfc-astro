@@ -1,0 +1,48 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { shopItems } from '../data/shop';
+---
+<Layout title="Club Shop" description="Official Rotherfield FC teamwear — training kit, jackets, accessories and more.">
+  <div class="page-hero">
+    <div class="container">
+      <h1>Club Shop</h1>
+      <p>Official Rotherfield FC teamwear, supplied by Game for Life.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Official Teamwear</h2>
+        <p>
+          Supplied by <a href="https://gameforlife.co.uk/collections/rotherfield-fc" target="_blank" rel="noopener noreferrer" style="color:var(--green-mid);font-weight:600;">Game for Life</a>.
+          Clicking an item will take you to their website to complete your purchase.
+        </p>
+      </div>
+
+      <div
+        style="background:var(--green-pale); border:1px solid var(--green-light); border-radius:var(--radius); padding:0.9rem 1.1rem; margin-bottom:2rem; font-size:0.875rem; color:var(--green-dark);"
+      >
+        ℹ️ Due to the bespoke nature of these garments, delivery may take up to 3 weeks during peak times. You will be taken to our partner's website to complete your purchase.
+      </div>
+
+      <div class="shop-grid">
+        {shopItems.map(item => (
+          <a href={item.url} target="_blank" rel="noopener noreferrer" class="shop-card" style="display:flex;flex-direction:column;color:inherit;">
+            <div class="shop-card__img">{item.emoji}</div>
+            <div class="shop-card__body" style="flex:1;display:flex;flex-direction:column;justify-content:space-between;">
+              <h3>{item.name}</h3>
+              <p class="shop-card__price">
+                {item.price
+                  ? <strong>{item.price}</strong>
+                  : <>Juniors <strong>{item.juniorPrice}</strong> / Seniors <strong>{item.seniorPrice}</strong></>
+                }
+              </p>
+              <span class="btn btn--primary" style="font-size:0.8rem; text-align:center; margin-top:auto;">Buy Now →</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

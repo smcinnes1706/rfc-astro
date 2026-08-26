@@ -1,0 +1,57 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { teamLabel, teamBadgeClass } from '../../utils/team';
+
+const allNews = await getCollection('news');
+allNews.sort((a, b) => b.data.date.localeCompare(a.data.date));
+
+const categoryLabel: Record<string, string> = {
+  'match-report': 'Match Report',
+  'club-news': 'Club News',
+  'juniors': 'Juniors',
+};
+
+function formatDate(dateStr: string) {
+  return new Date(dateStr).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+---
+<Layout title="News" description="Latest news, match reports and club updates from Rotherfield FC.">
+  <div class="page-hero">
+    <div class="container">
+      <h1>News</h1>
+      <p>Match reports, club updates and everything Rotherfield FC.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="news-grid">
+        {allNews.map(entry => (
+          <article class="news-card">
+            {entry.data.image
+              ? <img src={entry.data.image} alt={entry.data.title} class="news-card__img" style="height:180px;object-fit:cover;width:100%;" />
+              : <div class="news-card__img">⚽</div>
+            }
+            <div class="news-card__body">
+              <div class="news-card__meta">
+                <span class={`badge ${entry.data.category === 'match-report' ? 'badge--green' : entry.data.category === 'juniors' ? 'badge--gold' : 'badge--grey'}`}>
+                  {categoryLabel[entry.data.category]}
+                </span>
+                {entry.data.team && (
+                  <span class={`badge ${teamBadgeClass[entry.data.team]}`}>{teamLabel[entry.data.team]}</span>
+                )}
+                <span class="news-card__date">{formatDate(entry.data.date)}</span>
+              </div>
+              <h3 class="news-card__title">
+                <a href={`/news/${entry.id}`}>{entry.data.title}</a>
+              </h3>
+              <p class="news-card__excerpt">{entry.data.excerpt}</p>
+              <a class="news-card__link" href={`/news/${entry.id}`}>Read more →</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

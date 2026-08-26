@@ -1,0 +1,122 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { committee, history } from '../data/club';
+
+const managementRoles = ['Chairman', 'Vice Chairman', 'Club Secretary', 'Treasurer', 'Fixture Secretary', 'Press Officer', 'Kit Manager'];
+const management = committee.filter(m => managementRoles.includes(m.role));
+const managers = committee.filter(m => m.role.includes('Manager') || m.role.includes('Head of'));
+const welfare = committee.filter(m => m.role.includes('Welfare'));
+---
+<Layout title="Club Information" description="The history, committee and background of Rotherfield Football Club, Est. 1893.">
+  <div class="page-hero">
+    <div class="container">
+      <h1>Club Information</h1>
+      <p>Everything about Rotherfield Football Club — our history, our people and our values.</p>
+    </div>
+  </div>
+
+  <!-- Quick facts bar -->
+  <div style="background:var(--green-pale); border-bottom:1px solid #b7e4c7;">
+    <div class="container" style="padding-top:0.9rem; padding-bottom:0.9rem; display:flex; flex-wrap:wrap; gap:1.5rem; font-size:0.85rem; color:var(--green-dark); font-weight:500;">
+      <span>📅 Founded: <strong>1893</strong></span>
+      <span>🏟️ Ground: <strong>Rotherfield Recreation Ground</strong></span>
+      <span>👕 Colours: <strong>Green &amp; White</strong></span>
+      <span>🏆 League: <strong>Gray Hooper Holt Mid Sussex Football League</strong></span>
+      <span>📍 <strong>TN6 3LX</strong></span>
+    </div>
+  </div>
+
+  <!-- History -->
+  <section class="section" id="history">
+    <div class="container">
+      <div class="section-header">
+        <h2>Our History</h2>
+        <p>Over 130 years of football in the heart of Rotherfield village.</p>
+      </div>
+      <div style="max-width:750px; position:relative;">
+        <!-- Timeline line -->
+        <div style="position:absolute; left:88px; top:0; bottom:0; width:2px; background:var(--green-pale);"></div>
+        <div style="display:flex; flex-direction:column; gap:0;">
+          {history.map((milestone, i) => (
+            <div style="display:flex; gap:1.5rem; align-items:flex-start; padding:1rem 0; position:relative;">
+              <!-- Year -->
+              <div style="min-width:80px; text-align:right; font-size:0.8rem; font-weight:700; color:var(--green-mid); padding-top:0.15rem; flex-shrink:0;">
+                {milestone.year}
+              </div>
+              <!-- Dot -->
+              <div style="width:12px; height:12px; border-radius:50%; background:var(--green-mid); flex-shrink:0; margin-top:0.25rem; position:relative; z-index:1;"></div>
+              <!-- Event -->
+              <p style="font-size:0.9rem; color:#374151; line-height:1.6; padding-top:0; flex:1;">{milestone.event}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Committee -->
+  <section class="section section--alt" id="committee">
+    <div class="container">
+      <div class="section-header">
+        <h2>Club Committee &amp; Officers</h2>
+        <p>The volunteers who run Rotherfield FC behind the scenes.</p>
+      </div>
+
+      <h3 style="font-size:1rem; text-transform:uppercase; letter-spacing:.06em; color:var(--grey-mid); margin-bottom:1rem; font-weight:600;">Club Management</h3>
+      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:1rem; margin-bottom:2.5rem;">
+        {management.map(member => (
+          <div class="team-card" style="border-top-color:var(--green-dark);">
+            <div style="font-size:1.25rem; margin-bottom:0.5rem;">👤</div>
+            <h3 style="font-size:1rem;">{member.name}</h3>
+            <p class="team-card__league">{member.role}</p>
+            {member.email && (
+              <a href={`mailto:${member.email}?subject=${encodeURIComponent(member.role + ' Enquiry')}`} class="team-card__cta">
+                Email →
+              </a>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <h3 style="font-size:1rem; text-transform:uppercase; letter-spacing:.06em; color:var(--grey-mid); margin-bottom:1rem; font-weight:600;">Team Management</h3>
+      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:1rem; margin-bottom:2.5rem;">
+        {managers.map(member => (
+          <div class="team-card" style="border-top-color:var(--green-mid);">
+            <div style="font-size:1.25rem; margin-bottom:0.5rem;">🏃</div>
+            <h3 style="font-size:1rem;">{member.name}</h3>
+            <p class="team-card__league">{member.role}</p>
+            {member.email && (
+              <a href={`mailto:${member.email}`} class="team-card__cta">Email →</a>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <h3 style="font-size:1rem; text-transform:uppercase; letter-spacing:.06em; color:var(--grey-mid); margin-bottom:1rem; font-weight:600;">Welfare</h3>
+      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:1rem;">
+        {welfare.map(member => (
+          <div class="team-card" style="border-top-color:#7c3aed;">
+            <div style="font-size:1.25rem; margin-bottom:0.5rem;">🛡️</div>
+            <h3 style="font-size:1rem;">{member.name}</h3>
+            <p class="team-card__league">{member.role}</p>
+            {member.email && (
+              <a href={`mailto:${member.email}?subject=Welfare%20Enquiry`} class="team-card__cta">Email →</a>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <p style="margin-top:1.75rem; font-size:0.8rem; color:var(--grey-mid);">
+        ℹ️ To update committee details, edit <code>src/data/club.ts</code>.
+      </p>
+    </div>
+  </section>
+
+  <div class="cta-bar">
+    <div class="container">
+      <h2>Get Involved</h2>
+      <p>Interested in volunteering, joining the committee or supporting the club in other ways?</p>
+      <a href="mailto:enquiriesrfc1893@gmail.com?subject=Volunteering%20Enquiry" class="btn btn--white">Get in Touch</a>
+    </div>
+  </div>
+</Layout>

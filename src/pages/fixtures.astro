@@ -1,0 +1,146 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { teamLabel, teamBadgeClass } from '../utils/team';
+
+const all = await getCollection('fixtures');
+const today = new Date();
+const todayStr = today.toISOString().slice(0, 10);
+
+// Sort all entries by date descending
+all.sort((a, b) => b.data.date.localeCompare(a.data.date));
+
+// Upcoming: no result, date >= today (ascending order for display)
+const fixtures = all
+  .filter(f => !f.data.result && f.data.date >= todayStr)
+  .reverse();
+
+// Results: has a result field, most recent first
+const results = all.filter(f => !!f.data.result);
+
+function formatDate(dateStr: string) {
+  return new Date(dateStr).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+function resultClass(result: string, isHome: boolean) {
+  const [h, a] = result.split('-').map(Number);
+  const rfc = isHome ? h : a;
+  const opp = isHome ? a : h;
+  if (rfc > opp) return 'result-win';
+  if (rfc === opp) return 'result-draw';
+  return 'result-loss';
+}
+
+function resultLabel(result: string, isHome: boolean) {
+  const [h, a] = result.split('-').map(Number);
+  const rfc = isHome ? h : a;
+  const opp = isHome ? a : h;
+  if (rfc > opp) return 'W';
+  if (rfc === opp) return 'D';
+  return 'L';
+}
+---
+<Layout title="Fixtures & Results" description="Upcoming fixtures and recent results for Rotherfield FC.">
+  <div class="page-hero">
+    <div class="container">
+      <h1>Fixtures &amp; Results</h1>
+      <p>Upcoming fixtures and recent results for all RFC teams.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <!-- Tab UI (JS progressively enhances) -->
+      <div class="tab-bar" role="tablist">
+        <button class="tab-btn active" role="tab" aria-selected="true" data-tab="fixtures">Upcoming Fixtures</button>
+        <button class="tab-btn" role="tab" aria-selected="false" data-tab="results">Recent Results</button>
+      </div>
+
+      <div id="tab-fixtures" class="tab-panel active">
+        <div class="fixtures-table-wrap">
+          <table class="fixtures-table">
+            <thead>
+              <tr>
+                <th>Team</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Home</th>
+                <th>Away</th>
+                <th>Competition</th>
+                <th>Venue</th>
+              </tr>
+            </thead>
+            <tbody>
+              {fixtures.map(f => (
+                <tr>
+                  <td><span class={`badge ${teamBadgeClass[f.data.team]}`}>{teamLabel[f.data.team]}</span></td>
+                  <td>{formatDate(f.data.date)}</td>
+                  <td>{f.data.time}</td>
+                  <td>
+                    {f.data.homeTeam}
+                    {f.data.isHome && <span class="home-tag">RFC</span>}
+                  </td>
+                  <td>
+                    {f.data.awayTeam}
+                    {!f.data.isHome && <span class="home-tag">RFC</span>}
+                  </td>
+                  <td>{f.data.competition}</td>
+                  <td>{f.data.venue}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="tab-results" class="tab-panel">
+        <div class="fixtures-table-wrap">
+          <table class="fixtures-table">
+            <thead>
+              <tr>
+                <th>Team</th>
+                <th>Date</th>
+                <th>Home</th>
+                <th>Score</th>
+                <th>Away</th>
+                <th>Result</th>
+                <th>Competition</th>
+              </tr>
+            </thead>
+            <tbody>
+              {results.map(r => (
+                <tr>
+                  <td><span class={`badge ${teamBadgeClass[r.data.team]}`}>{teamLabel[r.data.team]}</span></td>
+                  <td>{formatDate(r.data.date)}</td>
+                  <td>{r.data.homeTeam}</td>
+                  <td style="font-weight:700; text-align:center;">{r.data.result}</td>
+                  <td>{r.data.awayTeam}</td>
+                  <td>
+                    <span class={`badge ${resultClass(r.data.result!, r.data.isHome) === 'result-win' ? 'badge--green' : resultClass(r.data.result!, r.data.isHome) === 'result-draw' ? 'badge--gold' : 'badge--grey'}`}>
+                      {resultLabel(r.data.result!, r.data.isHome)}
+                    </span>
+                  </td>
+                  <td>{r.data.competition}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const tabs = document.querySelectorAll<HTMLButtonElement>('.tab-btn');
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      const target = document.getElementById(`tab-${btn.dataset.tab}`);
+      target?.classList.add('active');
+    });
+  });
+</script>

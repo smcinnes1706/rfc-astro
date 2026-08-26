@@ -1,0 +1,158 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="Fans & Visitors" description="Everything you need to know about visiting Rotherfield FC — directions, parking, facilities and match day info.">
+  <div class="page-hero">
+    <div class="container">
+      <h1>Fans &amp; Visitors</h1>
+      <p>Everything you need to know before visiting Rotherfield Recreation Ground.</p>
+    </div>
+  </div>
+
+  <!-- Ground info bar -->
+  <div style="background: var(--green-pale); border-bottom: 1px solid #b7e4c7;">
+    <div class="container" style="padding-top:1rem; padding-bottom:1rem; display:flex; flex-wrap:wrap; gap:1.5rem; align-items:center; font-size:0.875rem; color:var(--green-dark); font-weight:500;">
+      <span>📍 North Street, Rotherfield, TN6 3LX</span>
+      <span>⚽ Home of Rotherfield FC since 1893</span>
+      <a href="https://maps.google.com/?q=Rotherfield+Recreation+Ground,+North+Street,+Rotherfield,+TN6+3LX" target="_blank" rel="noopener noreferrer" style="color:var(--green-mid); font-weight:600;">Open in Google Maps →</a>
+    </div>
+  </div>
+
+  <!-- Getting Here -->
+  <section class="section" id="getting-here">
+    <div class="container">
+      <div class="section-header">
+        <h2>Getting Here</h2>
+        <p>Rotherfield Recreation Ground is located in the heart of Rotherfield village, East Sussex.</p>
+      </div>
+      <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap:1.25rem;">
+        <div class="info-card">
+          <div style="font-size:1.5rem; margin-bottom:0.6rem;">🚗</div>
+          <h3>By Car</h3>
+          <p>From Tunbridge Wells, take the A267 south towards Mayfield. Turn right into Rotherfield village and follow signs to the Recreation Ground on North Street. Postcode: <strong>TN6 3LX</strong>.</p>
+        </div>
+        <div class="info-card">
+          <div style="font-size:1.5rem; margin-bottom:0.6rem;">🚌</div>
+          <h3>By Bus</h3>
+          <p>The 252 and 254 bus routes serve Rotherfield from Tunbridge Wells and Crowborough. Alight at the Rotherfield village stop, a short walk from the ground.</p>
+        </div>
+        <div class="info-card">
+          <div style="font-size:1.5rem; margin-bottom:0.6rem;">🚆</div>
+          <h3>By Train</h3>
+          <p>The nearest railway stations are Crowborough (approx. 3 miles) and Stonegate (approx. 5 miles). Taxis are available from both stations.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Parking -->
+  <section class="section section--alt" id="parking">
+    <div class="container">
+      <div class="section-header">
+        <h2>Parking</h2>
+      </div>
+      <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap:1.25rem;">
+        <div class="info-card">
+          <div style="font-size:1.5rem; margin-bottom:0.6rem;">🅿️</div>
+          <h3>Ground Car Park</h3>
+          <p>Limited parking is available at the Recreation Ground itself on a first-come, first-served basis. Please follow the guidance of our stewards on match days.</p>
+        </div>
+        <div class="info-card">
+          <div style="font-size:1.5rem; margin-bottom:0.6rem;">🗺️</div>
+          <h3>Village Parking</h3>
+          <p>Additional on-street parking is available on North Street and surrounding roads. Please be considerate of local residents and do not block driveways or obstruct visibility.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ground & Facilities -->
+  <section class="section" id="facilities">
+    <div class="container">
+      <div class="section-header">
+        <h2>Ground &amp; Facilities</h2>
+        <p>What to expect when you arrive at Rotherfield Recreation Ground.</p>
+      </div>
+      <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap:1.25rem;">
+        <div class="team-card">
+          <div class="team-card__icon">🏟️</div>
+          <h3>The Ground</h3>
+          <p>A traditional village football ground with a grass pitch and open spectator areas on all sides. Bring appropriate footwear for the touchlines in wet weather.</p>
+        </div>
+        <div class="team-card">
+          <div class="team-card__icon">🍵</div>
+          <h3>Refreshments</h3>
+          <p>A tea bar is open on home match days serving hot drinks and snacks. Cash and card are accepted. Check our social media for availability on specific match days.</p>
+        </div>
+        <div class="team-card">
+          <div class="team-card__icon">🚻</div>
+          <h3>Toilets</h3>
+          <p>Toilet facilities are available at the ground on match days. Please ask a steward if you need assistance locating them.</p>
+        </div>
+        <div class="team-card">
+          <div class="team-card__icon">📶</div>
+          <h3>Connectivity</h3>
+          <p>Mobile coverage at the ground varies by network. We do not currently offer public Wi-Fi.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Match Day Guide -->
+  <section class="section section--alt" id="matchday">
+    <div class="container">
+      <div class="section-header">
+        <h2>Match Day Guide</h2>
+        <p>What to expect on a typical home match day at RFC.</p>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:0.75rem; max-width:700px;">
+        {[
+          { time: '~60 min before', detail: 'Gates open. Early arrivals welcome — great opportunity to watch the warm-up.' },
+          { time: '~30 min before', detail: 'Tea bar opens. Teams announced.' },
+          { time: 'Kick-off', detail: 'Standard Saturday kick-off is 14:00. Sunday fixtures and cup games may vary — always check our fixtures page.' },
+          { time: 'Half-time', detail: 'Approx. 15-minute interval. Tea bar remains open.' },
+          { time: 'Full-time', detail: 'Players and staff typically gather for post-match refreshments. Visitors are welcome to stay and enjoy the atmosphere.' },
+        ].map(item => (
+          <div style="display:flex; gap:1rem; background:var(--white); border:1px solid var(--grey-light); border-radius:var(--radius); padding:0.9rem 1.1rem; align-items:flex-start;">
+            <span style="font-size:0.75rem; font-weight:700; color:var(--green-mid); white-space:nowrap; padding-top:0.1rem; min-width:110px;">{item.time}</span>
+            <span style="font-size:0.875rem; color:var(--grey-dark);">{item.detail}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Code of Conduct -->
+  <section class="section" id="conduct">
+    <div class="container">
+      <div class="section-header">
+        <h2>Code of Conduct</h2>
+        <p>Rotherfield FC is a community club and we ask all visitors to help us maintain a welcoming and respectful environment.</p>
+      </div>
+      <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap:1rem; max-width:900px;">
+        {[
+          { icon: '🤝', text: 'Respect players, officials, volunteers and fellow supporters at all times.' },
+          { icon: '🧒', text: 'This is a family-friendly environment. Offensive language will not be tolerated.' },
+          { icon: '🐕', text: 'Well-behaved dogs on leads are welcome, but please clean up after them.' },
+          { icon: '🚭', text: 'No smoking or vaping within the ground boundary, in line with FA guidelines.' },
+          { icon: '📸', text: 'Photography is permitted for personal use. Please be mindful of others, especially children.' },
+          { icon: '🧤', text: 'Abuse of match officials is strictly prohibited and may result in being asked to leave.' },
+        ].map(item => (
+          <div style="display:flex; gap:0.75rem; align-items:flex-start; background:var(--off-white); border-radius:var(--radius); padding:0.9rem;">
+            <span style="font-size:1.25rem; flex-shrink:0;">{item.icon}</span>
+            <span style="font-size:0.875rem; color:var(--grey-dark);">{item.text}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact CTA -->
+  <div class="cta-bar">
+    <div class="container">
+      <h2>Questions?</h2>
+      <p>If you have any questions about visiting the ground, we're happy to help.</p>
+      <a href="mailto:enquiriesrfc1893@gmail.com" class="btn btn--white">Contact Us</a>
+    </div>
+  </div>
+</Layout>
