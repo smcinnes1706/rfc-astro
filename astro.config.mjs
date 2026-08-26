@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://rfc1893.github.io',
+  site: 'https://smcinnes1706.github.io',
+  base: '/rfc-astro',
   output: 'static',
 });
