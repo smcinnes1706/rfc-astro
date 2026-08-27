@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
-import { teamLabel, teamBadgeClass } from '../utils/team';
+import { fixtureTeamMetaByKey } from '../data/teams';
 
 const all = await getCollection('fixtures');
 const today = new Date();
@@ -19,7 +19,11 @@ const fixtures = all
 const results = all.filter(f => !!f.data.result);
 
 function formatDate(dateStr: string) {
-  return new Date(dateStr).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+  const d = new Date(dateStr);
+  const day = String(d.getDate()).padStart(2, '0');
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const year = d.getFullYear();
+  return `${day}/${month}/${year}`;
 }
 
 function resultClass(result: string, isHome: boolean) {
@@ -73,16 +77,14 @@ function resultLabel(result: string, isHome: boolean) {
             <tbody>
               {fixtures.map(f => (
                 <tr>
-                  <td><span class={`badge ${teamBadgeClass[f.data.team]}`}>{teamLabel[f.data.team]}</span></td>
+                  <td><span class={`badge ${fixtureTeamMetaByKey[f.data.team].badgeClass}`}>{fixtureTeamMetaByKey[f.data.team].label}</span></td>
                   <td>{formatDate(f.data.date)}</td>
                   <td>{f.data.time}</td>
                   <td>
-                    {f.data.homeTeam}
-                    {f.data.isHome && <span class="home-tag">RFC</span>}
+                    {f.data.isHome ? <span class="rfc-team">{fixtureTeamMetaByKey[f.data.team].rfcDisplayName}</span> : f.data.homeTeam}
                   </td>
                   <td>
-                    {f.data.awayTeam}
-                    {!f.data.isHome && <span class="home-tag">RFC</span>}
+                    {!f.data.isHome ? <span class="rfc-team">{fixtureTeamMetaByKey[f.data.team].rfcDisplayName}</span> : f.data.awayTeam}
                   </td>
                   <td>{f.data.competition}</td>
                   <td>{f.data.venue}</td>
@@ -110,11 +112,11 @@ function resultLabel(result: string, isHome: boolean) {
             <tbody>
               {results.map(r => (
                 <tr>
-                  <td><span class={`badge ${teamBadgeClass[r.data.team]}`}>{teamLabel[r.data.team]}</span></td>
+                  <td><span class={`badge ${fixtureTeamMetaByKey[r.data.team].badgeClass}`}>{fixtureTeamMetaByKey[r.data.team].label}</span></td>
                   <td>{formatDate(r.data.date)}</td>
-                  <td>{r.data.homeTeam}</td>
+                  <td>{r.data.isHome ? <span class="rfc-team">{fixtureTeamMetaByKey[r.data.team].rfcDisplayName}</span> : r.data.homeTeam}</td>
                   <td style="font-weight:700; text-align:center;">{r.data.result}</td>
-                  <td>{r.data.awayTeam}</td>
+                  <td>{!r.data.isHome ? <span class="rfc-team">{fixtureTeamMetaByKey[r.data.team].rfcDisplayName}</span> : r.data.awayTeam}</td>
                   <td>
                     <span class={`badge ${resultClass(r.data.result!, r.data.isHome) === 'result-win' ? 'badge--green' : resultClass(r.data.result!, r.data.isHome) === 'result-draw' ? 'badge--gold' : 'badge--grey'}`}>
                       {resultLabel(r.data.result!, r.data.isHome)}

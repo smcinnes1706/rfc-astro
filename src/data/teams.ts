@@ -13,6 +13,10 @@ export interface Team {
   type: 'adult' | 'junior' | 'vets';
   ageGroup?: string;
   image?: string;
+  fixtureKey?: 'first' | 'reserves' | 'veterans';
+  shortLabel?: string;
+  rfcDisplayName?: string;
+  badgeClass?: string;
 }
 
 export const teams: Team[] = [
@@ -26,6 +30,10 @@ export const teams: Team[] = [
     contactEmail: 'enquiriesrfc1893@gmail.com',
     type: 'adult',
     image: '/rfc-astro/images/teams/first-team.avif',
+    fixtureKey: 'first',
+    shortLabel: 'Firsts',
+    rfcDisplayName: 'Rotherfield Firsts',
+    badgeClass: 'badge--first',
   },
   {
     id: 'reserves',
@@ -36,6 +44,10 @@ export const teams: Team[] = [
     contactEmail: 'enquiriesrfc1893@gmail.com',
     type: 'adult',
     image: '/rfc-astro/images/teams/reserves-team.avif',
+    fixtureKey: 'reserves',
+    shortLabel: 'Reserves',
+    rfcDisplayName: 'Rotherfield Reserves',
+    badgeClass: 'badge--reserves',
   },
   {
     id: 'vets',
@@ -45,6 +57,10 @@ export const teams: Team[] = [
     league: 'Sussex Sunday Football League',
     contactEmail: 'enquiriesrfc1893@gmail.com',
     type: 'vets',
+    fixtureKey: 'veterans',
+    shortLabel: 'Veterans',
+    rfcDisplayName: 'Rotherfield Vets',
+    badgeClass: 'badge--veterans',
   },
   {
     id: 'juniors-u6-u11',
@@ -77,3 +93,13 @@ export const teams: Team[] = [
     ageGroup: 'Ages 5–11',
   },
 ];
+
+export const fixtureTeamMetaByKey = Object.fromEntries(
+  teams
+    .filter((team) => team.fixtureKey && team.shortLabel && team.rfcDisplayName && team.badgeClass)
+    .map((team) => [team.fixtureKey as string, {
+      label: team.shortLabel as string,
+      rfcDisplayName: team.rfcDisplayName as string,
+      badgeClass: team.badgeClass as string,
+    }])
+);

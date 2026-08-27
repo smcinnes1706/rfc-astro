@@ -1,7 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { getCollection, render } from "astro:content";
-import { teamLabel, teamBadgeClass } from "../../utils/team";
+import { fixtureTeamMetaByKey } from "../../data/teams";
 
 export async function getStaticPaths() {
   const allNews = await getCollection("news");
@@ -49,7 +49,7 @@ function formatDate(dateStr) {
             {categoryLabel[entry.data.category]}
           </span>
           {entry.data.team && (
-            <span class={`badge ${teamBadgeClass[entry.data.team]}`}>{teamLabel[entry.data.team]}</span>
+            <span class={`badge ${fixtureTeamMetaByKey[entry.data.team].badgeClass}`}>{fixtureTeamMetaByKey[entry.data.team].label}</span>
           )}
           <span>{formatDate(entry.data.date)}</span>
           <span>By {entry.data.author}</span>

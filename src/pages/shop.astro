@@ -28,13 +28,13 @@ import { shopItems } from '../data/shop';
 
       <div class="shop-grid">
         {shopItems.map(item => (
-          <a href={item.url} target="_blank" rel="noopener noreferrer" class="shop-card" style="display:flex;flex-direction:column;color:inherit;">
+          <a href={item.url} target="_blank" rel="noopener noreferrer" class="card shop-card" style="display:flex;flex-direction:column;color:inherit;">
             {item.image
               ? <img src={item.image} alt={item.name} class="shop-card__banner" />
               : <div class="shop-card__img">{item.emoji}</div>
             }
-            <div class="shop-card__body" style="flex:1;display:flex;flex-direction:column;justify-content:space-between;">
-              <h3>{item.name}</h3>
+            <div class="card__body shop-card__body" style="flex:1;display:flex;flex-direction:column;justify-content:space-between;">
+              <h3 class="card__title card__title--compact">{item.name}</h3>
               <p class="shop-card__price">
                 {item.price
                   ? <strong>{item.price}</strong>

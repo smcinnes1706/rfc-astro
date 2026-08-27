@@ -1,5 +1,3 @@
-import type { TeamName } from './fixtures';
-
 export interface NewsPost {
   slug: string;
   title: string;
@@ -9,7 +7,7 @@ export interface NewsPost {
   body: string;
   image?: string;
   category: 'match-report' | 'club-news' | 'juniors';
-  team?: TeamName;
+  team?: 'first' | 'reserves' | 'veterans';
 }
 
 export const newsPosts: NewsPost[] = [

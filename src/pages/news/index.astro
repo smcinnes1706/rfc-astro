@@ -1,7 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
-import { teamLabel, teamBadgeClass } from '../../utils/team';
+import { fixtureTeamMetaByKey } from '../../data/teams';
 
 const allNews = await getCollection('news');
 allNews.sort((a, b) => b.data.date.localeCompare(a.data.date));
@@ -28,22 +28,24 @@ function formatDate(dateStr: string) {
     <div class="container">
       <div class="news-grid">
         {allNews.map(entry => (
-          <article class="news-card">
-            {entry.data.image
-              ? <img src={entry.data.image} alt={entry.data.title} class="news-card__img" style="height:180px;object-fit:cover;width:100%;" />
-              : <div class="news-card__img">⚽</div>
-            }
-            <div class="news-card__body">
+          <article class={`card news-card${entry.data.image ? ' news-card--has-image' : ''}`}>
+            <a href={`${import.meta.env.BASE_URL}/news/${entry.id}`} aria-label={`Read article: ${entry.data.title}`}>
+              {entry.data.image
+                ? <img src={entry.data.image} alt={entry.data.title} class="news-card__img news-card__img--photo" />
+                : <div class="news-card__img">⚽</div>
+              }
+            </a>
+            <div class="card__body news-card__body">
               <div class="news-card__meta">
                 <span class={`badge ${entry.data.category === 'match-report' ? 'badge--green' : entry.data.category === 'juniors' ? 'badge--gold' : 'badge--grey'}`}>
                   {categoryLabel[entry.data.category]}
                 </span>
                 {entry.data.team && (
-                  <span class={`badge ${teamBadgeClass[entry.data.team]}`}>{teamLabel[entry.data.team]}</span>
+                  <span class={`badge ${fixtureTeamMetaByKey[entry.data.team].badgeClass}`}>{fixtureTeamMetaByKey[entry.data.team].label}</span>
                 )}
                 <span class="news-card__date">{formatDate(entry.data.date)}</span>
               </div>
-              <h3 class="news-card__title">
+              <h3 class="card__title news-card__title">
                 <a href={`${import.meta.env.BASE_URL}/news/${entry.id}`}>{entry.data.title}</a>
               </h3>
               <p class="news-card__excerpt">{entry.data.excerpt}</p>
