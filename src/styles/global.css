@@ -809,3 +809,86 @@ h3 { font-size: 1.25rem; }
 @media (max-width: 900px) {
   .fixtures-table-wrap { overflow-x: auto; }
 }
+
+@media (max-width: 640px) {
+  .fixtures-table-wrap {
+    overflow-x: visible;
+    border: none;
+    background: transparent;
+  }
+
+  .fixtures-table,
+  .fixtures-table thead,
+  .fixtures-table tbody,
+  .fixtures-table tr,
+  .fixtures-table th,
+  .fixtures-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .fixtures-table thead {
+    display: none;
+  }
+
+  .fixtures-table tbody {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 0;
+  }
+
+  .fixtures-table tr {
+    background: var(--white);
+    border: 1px solid #c8cdd2;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .fixtures-table td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.7rem 0.85rem;
+    border-bottom: 1px solid #eef2f4;
+    text-align: right;
+  }
+
+  .fixtures-table td .badge {
+    display: inline-flex;
+    align-self: flex-start;
+    justify-self: flex-start;
+    max-width: fit-content;
+    width: auto;
+    white-space: nowrap;
+  }
+
+  .fixtures-table td:last-child {
+    border-bottom: none;
+  }
+
+  .fixtures-table td::before {
+    content: attr(data-label);
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--grey-mid);
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .fixtures-table td > * {
+    flex: 1;
+    text-align: right;
+  }
+
+  .fixtures-table td.report-cell {
+    justify-content: flex-end;
+  }
+
+  .fixtures-table td.report-cell::before {
+    margin-right: auto;
+  }
+}

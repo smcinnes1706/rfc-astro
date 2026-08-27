@@ -59,17 +59,17 @@ function formatDate(dateStr: string) {
             <tbody>
               {fixtures.map(f => (
                 <tr>
-                  <td><span class={`badge ${fixtureTeamMetaByKey[f.data.team].badgeClass}`}>{fixtureTeamMetaByKey[f.data.team].label}</span></td>
-                  <td>{formatDate(f.data.date)}</td>
-                  <td>{f.data.time}</td>
-                  <td>
+                  <td data-label="Team"><span class={`badge ${fixtureTeamMetaByKey[f.data.team].badgeClass}`}>{fixtureTeamMetaByKey[f.data.team].label}</span></td>
+                  <td data-label="Date">{formatDate(f.data.date)}</td>
+                  <td data-label="Time">{f.data.time}</td>
+                  <td data-label="Home">
                     {f.data.isHome ? <span class="rfc-team">{fixtureTeamMetaByKey[f.data.team].rfcDisplayName}</span> : f.data.homeTeam}
                   </td>
-                  <td>
+                  <td data-label="Away">
                     {!f.data.isHome ? <span class="rfc-team">{fixtureTeamMetaByKey[f.data.team].rfcDisplayName}</span> : f.data.awayTeam}
                   </td>
-                  <td>{f.data.competition}</td>
-                  <td>{f.data.venue}</td>
+                  <td data-label="Competition">{f.data.competition}</td>
+                  <td data-label="Venue">{f.data.venue}</td>
                 </tr>
               ))}
             </tbody>
@@ -94,12 +94,12 @@ function formatDate(dateStr: string) {
             <tbody>
               {results.map(r => (
                 <tr>
-                  <td><span class={`badge ${fixtureTeamMetaByKey[r.data.team].badgeClass}`}>{fixtureTeamMetaByKey[r.data.team].label}</span></td>
-                  <td>{formatDate(r.data.date)}</td>
-                  <td>{r.data.isHome ? <span class="rfc-team">{fixtureTeamMetaByKey[r.data.team].rfcDisplayName}</span> : r.data.homeTeam}</td>
-                  <td style="font-weight:700; text-align:center;">{r.data.result}</td>
-                  <td>{!r.data.isHome ? <span class="rfc-team">{fixtureTeamMetaByKey[r.data.team].rfcDisplayName}</span> : r.data.awayTeam}</td>
-                  <td class="report-cell">
+                  <td data-label="Team"><span class={`badge ${fixtureTeamMetaByKey[r.data.team].badgeClass}`}>{fixtureTeamMetaByKey[r.data.team].label}</span></td>
+                  <td data-label="Date">{formatDate(r.data.date)}</td>
+                  <td data-label="Home">{r.data.isHome ? <span class="rfc-team">{fixtureTeamMetaByKey[r.data.team].rfcDisplayName}</span> : r.data.homeTeam}</td>
+                  <td data-label="Score" style="font-weight:700; text-align:center;">{r.data.result}</td>
+                  <td data-label="Away">{!r.data.isHome ? <span class="rfc-team">{fixtureTeamMetaByKey[r.data.team].rfcDisplayName}</span> : r.data.awayTeam}</td>
+                  <td data-label="Report" class="report-cell">
                     {r.data.reportSlug ? (
                       <a
                         class="report-link"
@@ -113,7 +113,7 @@ function formatDate(dateStr: string) {
                       <span class="report-empty" aria-hidden="true">—</span>
                     )}
                   </td>
-                  <td>{r.data.competition}</td>
+                  <td data-label="Competition">{r.data.competition}</td>
                 </tr>
               ))}
             </tbody>
