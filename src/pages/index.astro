@@ -56,9 +56,9 @@ const heroImage: string | null = '/rfc-astro/images/home-hero.avif';
           <p class="fixture-label">Next Fixture</p>
           <p class="fixture-date">{formatDate(nextFixture.date)} · {nextFixture.time}</p>
           <p class="fixture-teams">
-            {nextFixture.isHome ? <strong>RFC</strong> : nextFixture.homeTeam}<br />
+            {nextFixture.isHome ? <strong>{`Rotherfield ${teamLabel[nextFixture.team]}`}</strong> : nextFixture.homeTeam}<br />
             vs<br />
-            {nextFixture.isHome ? nextFixture.awayTeam : <strong>RFC</strong>}
+            {nextFixture.isHome ? nextFixture.awayTeam : <strong>{`Rotherfield ${teamLabel[nextFixture.team]}`}</strong>}
           </p>
           <p class="fixture-comp">{nextFixture.competition}</p>
         </div>
@@ -72,9 +72,9 @@ const heroImage: string | null = '/rfc-astro/images/home-hero.avif';
         <p class="fixture-label">Next Fixture</p>
         <p class="fixture-date">{formatDate(nextFixture.date)} · {nextFixture.time}</p>
         <p class="fixture-teams">
-          {nextFixture.isHome ? <strong>RFC</strong> : nextFixture.homeTeam}<br />
+          {nextFixture.isHome ? <strong>{`Rotherfield ${teamLabel[nextFixture.team]}`}</strong> : nextFixture.homeTeam}<br />
           vs<br />
-          {nextFixture.isHome ? nextFixture.awayTeam : <strong>RFC</strong>}
+          {nextFixture.isHome ? nextFixture.awayTeam : <strong>{`Rotherfield ${teamLabel[nextFixture.team]}`}</strong>}
         </p>
         <p class="fixture-comp">{nextFixture.competition}</p>
       </div>
