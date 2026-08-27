@@ -126,14 +126,31 @@ function formatDate(dateStr: string) {
 
 <script>
   const tabs = document.querySelectorAll<HTMLButtonElement>('.tab-btn');
+
+  function activateTab(tabKey: string) {
+    tabs.forEach(t => {
+      const isActive = t.dataset.tab === tabKey;
+      t.classList.toggle('active', isActive);
+      t.setAttribute('aria-selected', String(isActive));
+    });
+
+    document.querySelectorAll('.tab-panel').forEach(panel => {
+      const isActive = panel.id === `tab-${tabKey}`;
+      panel.classList.toggle('active', isActive);
+    });
+  }
+
   tabs.forEach(btn => {
     btn.addEventListener('click', () => {
-      tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
-      btn.classList.add('active');
-      btn.setAttribute('aria-selected', 'true');
-      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-      const target = document.getElementById(`tab-${btn.dataset.tab}`);
-      target?.classList.add('active');
+      const tabKey = btn.dataset.tab;
+      if (!tabKey) return;
+      history.pushState(null, '', `#${tabKey}`);
+      activateTab(tabKey);
     });
   });
+
+  const initialTab = window.location.hash.replace('#', '') || 'fixtures';
+  if (tabs.length) {
+    activateTab(initialTab);
+  }
 </script>
