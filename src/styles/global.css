@@ -94,6 +94,39 @@ h3 { font-size: 1.25rem; }
 /* =============================================
    Header / Nav
    ============================================= */
+.home-intro__title {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  margin-bottom: 0.6rem;
+}
+.home-intro__text {
+  color: var(--grey-mid);
+  font-size: 0.875rem;
+  line-height: 1.75;
+}
+.fixture-meta {
+  color: var(--grey-mid);
+  font-size: 0.8rem;
+  margin-bottom: 0.75rem;
+}
+.fixture-score {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+.fixture-venue {
+  font-size: 0.8rem;
+  color: var(--grey-mid);
+}
+.sponsor-link-row {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.6);
+  text-align: center;
+}
+.sponsor-link {
+  color: rgba(255,255,255,0.85);
+  font-weight: 600;
+}
+
 .site-header {
   position: sticky;
   top: 0;
@@ -187,11 +220,38 @@ h3 { font-size: 1.25rem; }
 
 @media (max-width: 720px) {
   .site-header .container {
+    position: relative;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     gap: 0.6rem;
+    padding-right: 3.2rem;
   }
-  .nav-toggle { display: flex; }
+  .site-logo {
+    position: relative;
+    z-index: 1;
+    max-width: 42%;
+    font-size: 0.9rem;
+    line-height: 1;
+  }
+  .site-logo .club-name {
+    white-space: nowrap;
+  }
+  .site-logo .club-name span:first-child {
+    white-space: nowrap;
+  }
+  .site-logo .club-name span:last-child {
+    font-size: 0.5rem;
+    letter-spacing: 0.06em;
+  }
+  .nav-toggle {
+    display: flex;
+    position: absolute;
+    right: 0.7rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 3;
+  }
   .site-nav {
     display: none;
     position: absolute;
@@ -207,11 +267,15 @@ h3 { font-size: 1.25rem; }
   .site-nav.open { display: flex; }
   .site-nav a { padding: 0.6rem 0.75rem; }
   .header-badges {
+    position: absolute;
+    left: calc(64% + 0.25rem);
+    top: 50%;
+    transform: translate(-50%, -50%);
     border-left: none;
     padding-left: 0;
     gap: 0.25rem;
-    margin-left: auto;
-    margin-right: 0.25rem;
+    margin: 0;
+    z-index: 2;
   }
   .header-badges img {
     width: auto;
@@ -320,7 +384,11 @@ h3 { font-size: 1.25rem; }
 .section--dark { background: var(--green-dark); color: var(--white); }
 .section-header { margin-bottom: 2rem; }
 .section-header h2 { margin-bottom: 0.4rem; }
-.section-header p { color: var(--grey-mid); }
+.section-header p {
+  color: var(--grey-mid);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
 .section-header--flex {
   display: flex;
   align-items: center;
@@ -628,10 +696,11 @@ h3 { font-size: 1.25rem; }
 @media (max-width: 640px) { .info-split { grid-template-columns: 1fr; } }
 .info-card {
   background: var(--white);
-  border: 1px solid var(--grey-light);
+  border: 1px solid #c8cdd2;
   border-radius: 10px;
   padding: 2rem;
   border-left: 5px solid var(--green-mid);
+  box-shadow: inset 0 0 0 1px rgba(17, 61, 31, 0.04);
 }
 .info-card h3 { margin-bottom: 0.5rem; }
 .info-card p { color: var(--grey-mid); font-size: 0.9rem; margin-bottom: 1.25rem; }

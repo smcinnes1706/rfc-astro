@@ -84,9 +84,9 @@ const heroImage: string | null = '/rfc-astro/images/home-hero.avif';
   <!-- Welcome / club intro -->
   <section class="section" style="padding-bottom:0;">
     <div class="container">
-      <div style="border-left:4px solid var(--green-mid); padding-left:1.5rem;">
-        <h1 style="font-size:clamp(1.6rem,3vw,2.2rem); margin-bottom:0.6rem;">Welcome to Rotherfield Football Club</h1>
-        <p style="color:var(--grey-mid); font-size:1rem; line-height:1.75;">
+      <div style="padding-left:0;">
+        <h1 class="home-intro__title">Welcome to Rotherfield Football Club</h1>
+        <p class="home-intro__text">
           Est. 1893 — The Greens. Based at Rotherfield Recreation Ground, North Street, TN6 3LX.
           A community club with junior groups from Reception to Year 13, adult teams competing in the
           Gray Hooper Holt Mid Sussex Football League, and a Veterans side in the Sussex Sunday League.
@@ -142,26 +142,26 @@ const heroImage: string | null = '/rfc-astro/images/home-hero.avif';
         {lastResult && (
           <div class="info-card">
             <h3>Last Result</h3>
-            <p style="color: var(--grey-mid); font-size: 0.8rem; margin-bottom: 0.75rem;">
+            <p class="fixture-meta">
               {formatDate(lastResult.date)} · {lastResult.competition}
             </p>
-            <p style="font-size: 1.05rem; font-weight: 700; margin-bottom: 0.4rem;">
+            <p class="fixture-score">
               {lastResult.homeTeam} <span class={resultClass(lastResult.result!, lastResult.isHome)}>{lastResult.result}</span> {lastResult.awayTeam}
             </p>
-            <p style="font-size: 0.8rem; color: var(--grey-mid);">{lastResult.venue}</p>
+            <p class="fixture-venue">{lastResult.venue}</p>
             <a href={`${import.meta.env.BASE_URL}/fixtures`} style="display:inline-block; margin-top: 1rem;" class="btn btn--primary">All Results →</a>
           </div>
         )}
         {nextFixture && (
           <div class="info-card">
             <h3>Next Fixture</h3>
-            <p style="color: var(--grey-mid); font-size: 0.8rem; margin-bottom: 0.75rem;">
+            <p class="fixture-meta">
               {formatDate(nextFixture.date)} · {nextFixture.time} · {nextFixture.competition}
             </p>
-            <p style="font-size: 1.05rem; font-weight: 700; margin-bottom: 0.4rem;">
+            <p class="fixture-score">
               {nextFixture.homeTeam} vs {nextFixture.awayTeam}
             </p>
-            <p style="font-size: 0.8rem; color: var(--grey-mid);">{nextFixture.venue}</p>
+            <p class="fixture-venue">{nextFixture.venue}</p>
             <a href={`${import.meta.env.BASE_URL}/fixtures`} style="display:inline-block; margin-top: 1rem;" class="btn btn--primary">All Fixtures →</a>
           </div>
         )}
@@ -199,8 +199,8 @@ const heroImage: string | null = '/rfc-astro/images/home-hero.avif';
       </div>
     </div>
     <div class="container" style="padding-top:0.75rem; padding-bottom:0;">
-      <p style="font-size:0.8rem; color:rgba(255,255,255,0.6); text-align:center;">
-        <a href={`${import.meta.env.BASE_URL}/sponsors`} style="color:rgba(255,255,255,0.85); font-weight:600;">View all sponsors →</a>
+      <p class="sponsor-link-row">
+        <a href={`${import.meta.env.BASE_URL}/sponsors`} class="sponsor-link">View all sponsors →</a>
       </p>
     </div>
   </div>
