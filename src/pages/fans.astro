@@ -77,17 +77,17 @@ import Layout from '../layouts/Layout.astro';
         <div class="team-card">
           <div class="team-card__icon">🏟️</div>
           <h3>The Ground</h3>
-          <p>A traditional village football ground with a grass pitch and open spectator areas on all sides. Bring appropriate footwear for the touchlines in wet weather.</p>
+          <p>A traditional village football facility with a grass pitch and open spectator areas on all sides. Bring appropriate footwear for the touchlines in wet weather.</p>
         </div>
         <div class="team-card">
           <div class="team-card__icon">🍵</div>
           <h3>Refreshments</h3>
-          <p>A tea bar is open on home match days serving hot drinks and snacks. Cash and card are accepted. Check our social media for availability on specific match days.</p>
+          <p>A tea bar is open on home match days serving hot drinks and snacks. Cash and card are accepted.</p>
         </div>
         <div class="team-card">
           <div class="team-card__icon">🚻</div>
           <h3>Toilets</h3>
-          <p>Toilet facilities are available at the ground on match days. Please ask a steward if you need assistance locating them.</p>
+          <p>Toilet facilities are available at the ground on match days within the pavillion.</p>
         </div>
         <div class="team-card">
           <div class="team-card__icon">📶</div>
@@ -107,10 +107,8 @@ import Layout from '../layouts/Layout.astro';
       </div>
       <div style="display:flex; flex-direction:column; gap:0.75rem; max-width:700px;">
         {[
-          { time: '~60 min before', detail: 'Gates open. Early arrivals welcome — great opportunity to watch the warm-up.' },
-          { time: '~30 min before', detail: 'Tea bar opens. Teams announced.' },
           { time: 'Kick-off', detail: 'Standard Saturday kick-off is 14:00. Sunday fixtures and cup games may vary — always check our fixtures page.' },
-          { time: 'Half-time', detail: 'Approx. 15-minute interval. Tea bar remains open.' },
+          { time: 'Half-time', detail: 'Approx. 15-minute interval. Tea bar will be open.' },
           { time: 'Full-time', detail: 'Players and staff typically gather for post-match refreshments. Visitors are welcome to stay and enjoy the atmosphere.' },
         ].map(item => (
           <div style="display:flex; gap:1rem; background:var(--white); border:1px solid var(--grey-light); border-radius:var(--radius); padding:0.9rem 1.1rem; align-items:flex-start;">
@@ -133,9 +131,9 @@ import Layout from '../layouts/Layout.astro';
         {[
           { icon: '🤝', text: 'Respect players, officials, volunteers and fellow supporters at all times.' },
           { icon: '🧒', text: 'This is a family-friendly environment. Offensive language will not be tolerated.' },
-          { icon: '🐕', text: 'Well-behaved dogs on leads are welcome, but please clean up after them.' },
+          { icon: '🐕', text: 'Sorry, Dogs are not allowed on the recreation ground' },
           { icon: '🚭', text: 'No smoking or vaping within the ground boundary, in line with FA guidelines.' },
-          { icon: '📸', text: 'Photography is permitted for personal use. Please be mindful of others, especially children.' },
+          { icon: '📸', text: 'Photography is permitted for personal use. Please be mindful of others, especially children.  No filming allowed' },
           { icon: '🧤', text: 'Abuse of match officials is strictly prohibited and may result in being asked to leave.' },
         ].map(item => (
           <div style="display:flex; gap:0.75rem; align-items:flex-start; background:var(--off-white); border-radius:var(--radius); padding:0.9rem;">
