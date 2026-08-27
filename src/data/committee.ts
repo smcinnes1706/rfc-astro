@@ -41,6 +41,9 @@ export const committee: CommitteeMember[] = [
     name: 'Robin Paige',
     role: 'Fixture Secretary',
     sections: ['senior-club'],
+    image: '/rfc-astro/images/contacts/rpaige.jpg',
+    phone: '07711 456764',
+    email: 'robin.paige@tiscali.co.uk'
   },
   {
     name: 'Wayne Clarke',
@@ -59,6 +62,7 @@ export const committee: CommitteeMember[] = [
     role: 'Veterans Manager',
     image: '/rfc-astro/images/contacts/smcinnes.avif',
     sections: ['senior-club', 'team'],
+    email: 'rotherfieldfcvets@gmail.com'
   },
   {
     name: 'Mark Sumner',
@@ -69,6 +73,7 @@ export const committee: CommitteeMember[] = [
     name: 'Alex Watts',
     role: 'Committee Member',
     sections: ['senior-club'],
+    image: '/rfc-astro/images/contacts/awatts.jpg',
   },
   {
     name: 'James Bowen',
@@ -79,7 +84,7 @@ export const committee: CommitteeMember[] = [
     name: 'Aimee Bristow',
     role: 'Junior Club Welfare Officer',
     email: 'welfare.rjfc@gmail.com',
-    image: '/rfc-astro/images/contacts/aimeeb.avif',
+    image: '/rfc-astro/images/contacts/aimeeb.jpg',
     bio: 'Aimee has had involvement with the club for a number of years and in 2024 took on the role of Junior CWO.',
     sections: ['junior-club', 'welfare'],
   },
@@ -88,5 +93,32 @@ export const committee: CommitteeMember[] = [
     role: 'Social Media Officer',
     image: '/rfc-astro/images/contacts/eridleysmith.avif',
     sections: ['senior-club', 'communications'],
+  },
+  {
+    name: 'Hayley Sparks',
+    role: 'Club Secretary',
+    sections: ['junior-club'],
+  },
+  {
+    name: 'Guy Jenner',
+    role: 'Treasurer',
+    sections: ['junior-club'],
+  },
+  {
+    name: 'Sharon Everest',
+    role: 'Registration Secretary',
+    sections: ['junior-club'],
+    email: 'sharoneverest00@gmail.com'
+  },
+  {
+    name: 'Nathan Sheppard',
+    role: 'Head of Coaching & Player Development',
+    sections: ['junior-club'],
+    phone: '07766 952579'
+  },
+  {
+    name: 'Guy Jenner',
+    role: 'Treasurer',
+    sections: ['junior-club'],
   },
 ];
