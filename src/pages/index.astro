@@ -184,8 +184,16 @@ const heroImage: string | null = '/rfc-astro/images/home-hero.avif';
             class="sponsor-logo sponsor-logo--dark"
             tabindex={i >= sponsors.length ? -1 : 0}
             aria-hidden={i >= sponsors.length ? 'true' : undefined}
+            aria-label={s.name}
           >
-            {s.name}
+            {s.image ? (
+              <span class="sponsor-logo__media">
+                <img src={s.image} alt={s.name} class="sponsor-logo__image" />
+                <span class="sponsor-logo__tooltip">{s.name}</span>
+              </span>
+            ) : (
+              s.name
+            )}
           </a>
         ))}
       </div>
