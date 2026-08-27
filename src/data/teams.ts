@@ -12,6 +12,7 @@ export interface Team {
   shortLabel?: string;
   rfcDisplayName?: string;
   badgeClass?: string;
+  fulltimeLink?: string;
 }
 
 export const teams: Team[] = [
@@ -24,32 +25,35 @@ export const teams: Team[] = [
     manager: 'Wayne Clarke',
     contactEmail: 'enquiriesrfc1893@gmail.com',
     type: 'adult',
-    image: '/rfc-astro/images/teams/first-team.avif',
+    image: '/rfc-astro/images/teams/firsts.jpg',
     fixtureKey: 'first',
     shortLabel: 'Firsts',
     rfcDisplayName: 'Rotherfield Firsts',
     badgeClass: 'badge--first',
+    fulltimeLink: 'https://fulltime.thefa.com/index.html?league=568629645',
   },
   {
     id: 'reserves',
     name: 'Reserves',
     description:
       'Our reserve side competing in the Mid Sussex Football League Division 2 South.',
-    league: 'Mid Sussex League — Division 2 South',
+    league: 'Mid Sussex League — Division 1 South',
+    manager: 'Richard Holman',
     contactEmail: 'enquiriesrfc1893@gmail.com',
     type: 'adult',
-    image: '/rfc-astro/images/teams/reserves-team.avif',
+    image: '/rfc-astro/images/teams/reserves.png',
     fixtureKey: 'reserves',
     shortLabel: 'Reserves',
     rfcDisplayName: 'Rotherfield Reserves',
     badgeClass: 'badge--reserves',
+    fulltimeLink: 'https://fulltime.thefa.com/index.html?selectedSeason=89988287&selectedFixtureGroupAgeGroup=0&selectedDivision=156591799&selectedCompetition=0',
   },
   {
     id: 'vets',
     name: 'Vets (Over 35s)',
     description:
       'Our veteran side for players aged 35 and over, competing in the Sussex Sunday Football League.',
-    league: 'Sussex Sunday Football League',
+    league: 'SSFL - Vets Division 1',
     manager: 'Stuart McInnes',
     contactEmail: 'enquiriesrfc1893@gmail.com',
     type: 'vets',
@@ -58,6 +62,7 @@ export const teams: Team[] = [
     rfcDisplayName: 'Rotherfield Vets',
     badgeClass: 'badge--veterans',
     image: '/rfc-astro/images/teams/veterans.jpg',
+    fulltimeLink: 'https://fulltime.thefa.com/index.html?league=579770755&selectedSeason=72986152&selectedDivision=179639796&selectedCompetition=0&selectedFixtureGroupKey=1_772033486',
   },
   {
     id: 'juniors-u6-u11',

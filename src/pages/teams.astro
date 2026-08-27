@@ -43,6 +43,9 @@ const icons: Record<string, string> = {
               <p class="team-card__league">{team.league}</p>
               {team.manager && <p style="font-size:0.8rem; color:var(--grey-mid); margin-bottom:0.4rem;">Manager: {team.manager}</p>}
               <p>{team.description}</p>
+              <a href={`${team.fulltimeLink}`} class="team-card__cta" target="_blank">
+                FA Fulltime Homepage 🌐
+              </a>
               <a href={`mailto:${team.contactEmail}?subject=Player%20Enquiry%20-%20${encodeURIComponent(team.name)}`} class="team-card__cta">
                 Enquire about joining →
               </a>
@@ -58,39 +61,11 @@ const icons: Record<string, string> = {
     <div class="container">
       <div class="section-header">
         <h2>Junior Teams</h2>
-        <p>Junior football from Reception (U6) through to Year 13 (U18).</p>
-      </div>
-      <div class="teams-grid">
-        {juniorTeams.map(team => (
-          <div class={`card team-card${team.image ? ' team-card--has-image' : ''}`} id={team.id}>
-            <div class="team-card__media">
-              {team.image
-                ? <img src={team.image} alt={team.name} class="team-card__banner" />
-                : <div class="team-card__icon">{icons[team.id] ?? '⚽'}</div>
-              }
-            </div>
-            <div class="team-card__content">
-              <h3 class="card__title">{team.name}</h3>
-              {team.ageGroup && <p class="team-card__league">{team.ageGroup}</p>}
-              <p class="team-card__league" style="margin-top:0.1rem; opacity:0.8;">{team.league}</p>
-              <p>{team.description}</p>
-              {team.id === 'girls-wildcats' ? (
-                <a
-                  href="https://book.englandfootball.com/Wildcats/rotherfieldjunior0/Summary/e4f335f7-9cb8-4196-97a9-acd4aaa8c86f"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="team-card__cta"
-                >
-                  Book via England Football →
-                </a>
-              ) : (
-                <a href={`mailto:${team.contactEmail}?subject=Junior%20Enquiry%20-%20${encodeURIComponent(team.name)}`} class="team-card__cta">
-                  Enquire about joining →
-                </a>
-              )}
-            </div>
-          </div>
-        ))}
+        <p>The current Rotherfield Junior FC was founded in 1998.  Our ambition is to provide high quality football coaching for children of all ages and all abilities.  We are an Accredited England Football Club, which means we follow best practice in the way we coach, develop and look after our young players.</p> <br />
+        <p>We field teams from Under 7 level upwards in the Crowborough & District Football League.</p><br />
+        <p>All age groups have coaches who have completed Introduction To Coaching Football or (Formerly named) FA Level One coaching qualifications.</p><br />
+        <p>Younger age groups compete in 5 & 7-a-side mini soccer, progressing to 9 v 9 and then 11-a-side football for older age groups.  We also provide training sessions for Reception, Year 1 and Year 2 children, to help them learn the game and have fun.</p><br />
+        <p>​On Friday evenings we hold an all girls Wildcats session for ages 4-11.</p>
       </div>
     </div>
   </section>
