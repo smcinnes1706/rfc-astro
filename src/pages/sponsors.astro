@@ -2,7 +2,8 @@
 import Layout from '../layouts/Layout.astro';
 import { sponsors } from '../data/sponsors';
 
-const mainSponsors = sponsors.filter(s => s.tier === 'main');
+const platinumSponsors = sponsors.filter(s => s.tier === 'platinum');
+const goldSponsors = sponsors.filter(s => s.tier === 'gold');
 const partnerSponsors = sponsors.filter(s => s.tier === 'partner');
 ---
 <Layout title="Sponsors" description="The sponsors who support Rotherfield Football Club.">
@@ -16,11 +17,28 @@ const partnerSponsors = sponsors.filter(s => s.tier === 'partner');
   <section class="section">
     <div class="container">
       <div class="section-header">
-        <h2>Main Sponsors</h2>
+        <h2>Platinum Sponsors</h2>
         <p>Our principal partners whose support makes the club possible.</p>
       </div>
       <div class="sponsors-page-grid" style="grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); margin-bottom:3rem;">
-        {mainSponsors.map(s => (
+        {platinumSponsors.map(s => (
+          <div class={`sponsor-card${s.image ? ' sponsor-card--has-image' : ''}`} style="border-top: 4px solid var(--platinum);">
+            {s.image
+              ? <img src={s.image} alt={s.name} class="sponsor-card__banner" />
+              : <div style="font-size:1.5rem; margin-bottom:0.5rem;">⭐</div>
+            }
+            <h3>{s.name}</h3>
+            <a href={s.url} target="_blank" rel="noopener noreferrer">Visit website →</a>
+          </div>
+        ))}
+      </div>
+
+      <div class="section-header">
+        <h2>Gold Sponsors</h2>
+        <p>Our  partners whose support makes the club possible.</p>
+      </div>
+      <div class="sponsors-page-grid" style="grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); margin-bottom:3rem;">
+        {goldSponsors.map(s => (
           <div class={`sponsor-card${s.image ? ' sponsor-card--has-image' : ''}`} style="border-top: 4px solid var(--gold);">
             {s.image
               ? <img src={s.image} alt={s.name} class="sponsor-card__banner" />
