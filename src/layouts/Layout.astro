@@ -48,7 +48,7 @@ const currentPath = Astro.url.pathname;
 
     <header class="site-header">
       <div class="container">
-        <a href="/" class="site-logo">
+        <a href="/rfc-astro" class="site-logo">
           <img src="/rfc-astro/images/logo.avif" alt="Rotherfield FC crest" width="36" height="36" style="border-radius:50%;" />
           <span class="club-name">
             <span>Rotherfield FC</span>
@@ -70,6 +70,11 @@ const currentPath = Astro.url.pathname;
             </a>
           ))}
         </nav>
+
+        <div class="header-badges" aria-label="Club accreditations">
+          <img src="/rfc-astro/images/accredited.avif" alt="Accredited club" width="36" height="36" loading="lazy" decoding="async" />
+          <img src="/rfc-astro/images/fa-for-all.avif" alt="FA For All" width="36" height="36" loading="lazy" decoding="async" />
+        </div>
       </div>
     </header>
 
