@@ -438,6 +438,18 @@ h3 { font-size: 1.25rem; }
   color: var(--green-dark);
   font-weight: 700;
 }
+.fixtures-table .report-cell { text-align: center; }
+.report-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 999px;
+  line-height: 1;
+}
+.report-link:hover { background: var(--green-pale); }
+.report-empty { color: var(--grey-mid); }
 
 /* =============================================
    Teams grid

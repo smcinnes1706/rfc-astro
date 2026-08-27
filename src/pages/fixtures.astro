@@ -25,24 +25,6 @@ function formatDate(dateStr: string) {
   const year = d.getFullYear();
   return `${day}/${month}/${year}`;
 }
-
-function resultClass(result: string, isHome: boolean) {
-  const [h, a] = result.split('-').map(Number);
-  const rfc = isHome ? h : a;
-  const opp = isHome ? a : h;
-  if (rfc > opp) return 'result-win';
-  if (rfc === opp) return 'result-draw';
-  return 'result-loss';
-}
-
-function resultLabel(result: string, isHome: boolean) {
-  const [h, a] = result.split('-').map(Number);
-  const rfc = isHome ? h : a;
-  const opp = isHome ? a : h;
-  if (rfc > opp) return 'W';
-  if (rfc === opp) return 'D';
-  return 'L';
-}
 ---
 <Layout title="Fixtures & Results" description="Upcoming fixtures and recent results for Rotherfield FC.">
   <div class="page-hero">
@@ -105,7 +87,7 @@ function resultLabel(result: string, isHome: boolean) {
                 <th>Home</th>
                 <th>Score</th>
                 <th>Away</th>
-                <th>Result</th>
+                <th>Report</th>
                 <th>Competition</th>
               </tr>
             </thead>
@@ -117,10 +99,19 @@ function resultLabel(result: string, isHome: boolean) {
                   <td>{r.data.isHome ? <span class="rfc-team">{fixtureTeamMetaByKey[r.data.team].rfcDisplayName}</span> : r.data.homeTeam}</td>
                   <td style="font-weight:700; text-align:center;">{r.data.result}</td>
                   <td>{!r.data.isHome ? <span class="rfc-team">{fixtureTeamMetaByKey[r.data.team].rfcDisplayName}</span> : r.data.awayTeam}</td>
-                  <td>
-                    <span class={`badge ${resultClass(r.data.result!, r.data.isHome) === 'result-win' ? 'badge--green' : resultClass(r.data.result!, r.data.isHome) === 'result-draw' ? 'badge--gold' : 'badge--grey'}`}>
-                      {resultLabel(r.data.result!, r.data.isHome)}
-                    </span>
+                  <td class="report-cell">
+                    {r.data.reportSlug ? (
+                      <a
+                        class="report-link"
+                        href={`${import.meta.env.BASE_URL}/news/${r.data.reportSlug}`}
+                        aria-label={`Read match report: ${r.data.homeTeam} vs ${r.data.awayTeam}`}
+                        title="Read match report"
+                      >
+                        📝
+                      </a>
+                    ) : (
+                      <span class="report-empty" aria-hidden="true">—</span>
+                    )}
                   </td>
                   <td>{r.data.competition}</td>
                 </tr>

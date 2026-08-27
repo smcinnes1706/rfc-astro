@@ -8,6 +8,7 @@ venue: "Knight & Davey Community Stadium"
 isHome: false
 team: first
 result: "2-2"
+reportSlug: "2026-08-23-westfield-reserves-2-2-rotherfield-fc"  
 ---
 
 Two long-range strikes from Jack Spampanato and Finlay McLeod earned Rotherfield a point on the opening day of the 2026/27 season.

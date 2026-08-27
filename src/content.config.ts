@@ -11,6 +11,7 @@ const fixtureSchema = z.object({
   isHome: z.boolean(),
   team: z.enum(['first', 'reserves', 'veterans']),
   result: z.string().optional(),
+  reportSlug: z.string().optional(),
 });
 
 const newsSchema = z.object({
