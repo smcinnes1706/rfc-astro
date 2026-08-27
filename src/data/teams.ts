@@ -12,6 +12,7 @@ export interface Team {
   contactEmail: string;
   type: 'adult' | 'junior' | 'vets';
   ageGroup?: string;
+  image?: string;
 }
 
 export const teams: Team[] = [
@@ -24,6 +25,7 @@ export const teams: Team[] = [
     manager: 'Wayne Clarke',
     contactEmail: 'enquiriesrfc1893@gmail.com',
     type: 'adult',
+    image: '/rfc-astro/images/teams/first-team.avif',
   },
   {
     id: 'reserves',
@@ -33,6 +35,7 @@ export const teams: Team[] = [
     league: 'Mid Sussex League — Division 2 South',
     contactEmail: 'enquiriesrfc1893@gmail.com',
     type: 'adult',
+    image: '/rfc-astro/images/teams/reserves-team.avif',
   },
   {
     id: 'vets',

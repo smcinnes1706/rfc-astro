@@ -31,8 +31,11 @@ const icons: Record<string, string> = {
       </div>
       <div class="teams-grid">
         {adultTeams.map(team => (
-          <div class="team-card" id={team.id}>
-            <div class="team-card__icon">{icons[team.id] ?? '⚽'}</div>
+          <div class={`team-card${team.image ? ' team-card--has-image' : ''}`} id={team.id}>
+            {team.image
+              ? <img src={team.image} alt={team.name} class="team-card__banner" />
+              : <div class="team-card__icon">{icons[team.id] ?? '⚽'}</div>
+            }
             <h3>{team.name}</h3>
             <p class="team-card__league">{team.league}</p>
             {team.manager && <p style="font-size:0.8rem; color:var(--grey-mid); margin-bottom:0.4rem;">Manager: {team.manager}</p>}
@@ -55,8 +58,11 @@ const icons: Record<string, string> = {
       </div>
       <div class="teams-grid">
         {juniorTeams.map(team => (
-          <div class="team-card" id={team.id}>
-            <div class="team-card__icon">{icons[team.id] ?? '⚽'}</div>
+          <div class={`team-card${team.image ? ' team-card--has-image' : ''}`} id={team.id}>
+            {team.image
+              ? <img src={team.image} alt={team.name} class="team-card__banner" />
+              : <div class="team-card__icon">{icons[team.id] ?? '⚽'}</div>
+            }
             <h3>{team.name}</h3>
             {team.ageGroup && <p class="team-card__league">{team.ageGroup}</p>}
             <p class="team-card__league" style="margin-top:0.1rem; opacity:0.8;">{team.league}</p>
