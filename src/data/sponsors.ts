@@ -2,12 +2,13 @@ export interface Sponsor {
   name: string;
   url: string;
   tier: 'main' | 'partner';
+  image?: string;
 }
 
 export const sponsors: Sponsor[] = [
-  { name: 'PFS Ltd', url: 'https://www.pfsltd.co.uk/', tier: 'main' },
-  { name: 'Mercator Digital', url: 'https://www.mercatordigital.com/', tier: 'main' },
-  { name: 'Persimmon Homes', url: 'https://www.persimmonhomes.com/', tier: 'main' },
+  { name: 'PFS Ltd', url: 'https://www.pfsltd.co.uk/', tier: 'main', image: '/rfc-astro/images/sponsors/pfs-group-limited.avif' },
+  { name: 'Mercator Digital', url: 'https://www.mercatordigital.com/', tier: 'main', image: '/rfc-astro/images/sponsors/mercator-digital.avif' },
+  { name: 'Persimmon Homes', url: 'https://www.persimmonhomes.com/', tier: 'main', image: '/rfc-astro/images/sponsors/persimmon.avif' },
   { name: 'Auto Trader', url: 'http://www.autotrader.co.uk/', tier: 'partner' },
   { name: 'Masson Joinery', url: 'https://www.massonjoinery.co.uk/', tier: 'partner' },
   { name: 'Pier Contractors Limited', url: 'https://www.piercontractorslimited.com/', tier: 'partner' },

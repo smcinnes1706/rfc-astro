@@ -538,12 +538,14 @@ h3 { font-size: 1.25rem; }
 }
 .sponsor-card {
   background: var(--white);
-  border: 1px solid var(--grey-light);
+  border: 1px solid #c8cdd2;
   border-radius: 8px;
   padding: 1.25rem;
   text-align: center;
   transition: box-shadow var(--transition);
 }
+.sponsor-card--has-image { padding: 10px; }
+.sponsor-card__banner { display: block; width: 100%; height: 140px; object-fit: contain; background: var(--white); border-radius: 6px; margin-bottom: 0.5rem; }
 .sponsor-card:hover { box-shadow: var(--shadow-md); }
 .sponsor-card h3 { font-size: 0.95rem; margin-bottom: 0.3rem; }
 .sponsor-card a { font-size: 0.8rem; color: var(--green-mid); font-weight: 600; }

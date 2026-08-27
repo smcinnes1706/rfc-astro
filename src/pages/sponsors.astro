@@ -21,8 +21,11 @@ const partnerSponsors = sponsors.filter(s => s.tier === 'partner');
       </div>
       <div class="sponsors-page-grid" style="grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); margin-bottom:3rem;">
         {mainSponsors.map(s => (
-          <div class="sponsor-card" style="border-top: 4px solid var(--gold);">
-            <div style="font-size:1.5rem; margin-bottom:0.5rem;">⭐</div>
+          <div class={`sponsor-card${s.image ? ' sponsor-card--has-image' : ''}`} style="border-top: 4px solid var(--gold);">
+            {s.image
+              ? <img src={s.image} alt={s.name} class="sponsor-card__banner" />
+              : <div style="font-size:1.5rem; margin-bottom:0.5rem;">⭐</div>
+            }
             <h3>{s.name}</h3>
             <a href={s.url} target="_blank" rel="noopener noreferrer">Visit website →</a>
           </div>
@@ -35,8 +38,11 @@ const partnerSponsors = sponsors.filter(s => s.tier === 'partner');
       </div>
       <div class="sponsors-page-grid">
         {partnerSponsors.map(s => (
-          <div class="sponsor-card">
-            <div style="font-size:1.25rem; margin-bottom:0.5rem;">🤝</div>
+          <div class={`sponsor-card${s.image ? ' sponsor-card--has-image' : ''}`}>
+            {s.image
+              ? <img src={s.image} alt={s.name} class="sponsor-card__banner" />
+              : <div style="font-size:1.25rem; margin-bottom:0.5rem;">🤝</div>
+            }
             <h3>{s.name}</h3>
             <a href={s.url} target="_blank" rel="noopener noreferrer">Visit website →</a>
           </div>
