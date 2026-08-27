@@ -4,12 +4,13 @@ export interface ShopItem {
   seniorPrice?: string;
   price?: string;
   emoji: string;
+  image?: string;
   url: string;
 }
 
 export const shopItems: ShopItem[] = [
-  { name: 'Pro Training Tee', juniorPrice: '£16.00', seniorPrice: '£17.50', emoji: '👕', url: 'https://gameforlife.co.uk/collections/rotherfield-fc/products/rotherfield-fc-pro-training-tee' },
-  { name: 'Pro Tech Hoodie', juniorPrice: '£26.00', seniorPrice: '£36.00', emoji: '🧥', url: 'https://gameforlife.co.uk/collections/rotherfield-fc/products/rotherfield-fc-pro-tech-hoodie' },
+  { name: 'Pro Training Tee', juniorPrice: '£16.00', seniorPrice: '£17.50', emoji: '👕', url: 'https://gameforlife.co.uk/collections/rotherfield-fc/products/rotherfield-fc-pro-training-tee', image: '/rfc-astro/images/shop/pro-training-tee.avif' },
+  { name: 'Pro Tech Hoodie', juniorPrice: '£26.00', seniorPrice: '£36.00', emoji: '🧥', url: 'https://gameforlife.co.uk/collections/rotherfield-fc/products/rotherfield-fc-pro-tech-hoodie', image: '/rfc-astro/images/shop/pro-tech-hoodie.avif' },
   { name: 'Pro Elite Skinny Pants', juniorPrice: '£22.00', seniorPrice: '£29.00', emoji: '👖', url: 'https://gameforlife.co.uk/collections/rotherfield-fc/products/rotherfield-fc-pro-elite-skinny-pant' },
   { name: 'Pro HX Players Twin Bag', price: '£30.00', emoji: '🎒', url: 'https://gameforlife.co.uk/collections/rotherfield-fc/products/rotherfield-fc-pro-hx-players-twin-bag' },
   { name: 'Edge Pro ¾ Length Coat', price: '£65.00', emoji: '🧣', url: 'https://gameforlife.co.uk/products/rotherfield-fc-edge-pro-34-length-coat' },

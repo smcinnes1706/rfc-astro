@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import { committee, history } from '../data/club';
 
-const managementRoles = ['Chairman', 'Vice Chairman', 'Club Secretary', 'Treasurer', 'Fixture Secretary', 'Press Officer', 'Kit Manager'];
+const managementRoles = ['Chairman', 'Vice Chairman', 'Club Secretary', 'Treasurer', 'Fixture Secretary', 'Press Officer', 'Social Media Officer'];
 const management = committee.filter(m => managementRoles.includes(m.role));
 const managers = committee.filter(m => m.role.includes('Manager') || m.role.includes('Head of'));
 const welfare = committee.filter(m => m.role.includes('Welfare'));
@@ -65,8 +65,11 @@ const welfare = committee.filter(m => m.role.includes('Welfare'));
       <h3 style="font-size:1rem; text-transform:uppercase; letter-spacing:.06em; color:var(--grey-mid); margin-bottom:1rem; font-weight:600;">Club Management</h3>
       <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:1rem; margin-bottom:2.5rem;">
         {management.map(member => (
-          <div class="team-card" style="border-top-color:var(--green-dark);">
-            <div style="font-size:1.25rem; margin-bottom:0.5rem;">👤</div>
+          <div class={`team-card${member.image ? ' team-card--has-image' : ''}`} style="border-top-color:var(--green-dark);">
+            {member.image
+              ? <img src={member.image} alt={member.name} class="team-card__banner" />
+              : <div style="font-size:1.25rem; margin-bottom:0.5rem;">👤</div>
+            }
             <h3 style="font-size:1rem;">{member.name}</h3>
             <p class="team-card__league">{member.role}</p>
             {member.email && (
@@ -81,8 +84,11 @@ const welfare = committee.filter(m => m.role.includes('Welfare'));
       <h3 style="font-size:1rem; text-transform:uppercase; letter-spacing:.06em; color:var(--grey-mid); margin-bottom:1rem; font-weight:600;">Team Management</h3>
       <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:1rem; margin-bottom:2.5rem;">
         {managers.map(member => (
-          <div class="team-card" style="border-top-color:var(--green-mid);">
-            <div style="font-size:1.25rem; margin-bottom:0.5rem;">🏃</div>
+          <div class={`team-card${member.image ? ' team-card--has-image' : ''}`} style="border-top-color:var(--green-mid);">
+            {member.image
+              ? <img src={member.image} alt={member.name} class="team-card__banner" />
+              : <div style="font-size:1.25rem; margin-bottom:0.5rem;">🏃</div>
+            }
             <h3 style="font-size:1rem;">{member.name}</h3>
             <p class="team-card__league">{member.role}</p>
             {member.email && (
@@ -95,8 +101,11 @@ const welfare = committee.filter(m => m.role.includes('Welfare'));
       <h3 style="font-size:1rem; text-transform:uppercase; letter-spacing:.06em; color:var(--grey-mid); margin-bottom:1rem; font-weight:600;">Welfare</h3>
       <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:1rem;">
         {welfare.map(member => (
-          <div class="team-card" style="border-top-color:#7c3aed;">
-            <div style="font-size:1.25rem; margin-bottom:0.5rem;">🛡️</div>
+          <div class={`team-card${member.image ? ' team-card--has-image' : ''}`} style="border-top-color:#7c3aed;">
+            {member.image
+              ? <img src={member.image} alt={member.name} class="team-card__banner" />
+              : <div style="font-size:1.25rem; margin-bottom:0.5rem;">🛡️</div>
+            }
             <h3 style="font-size:1rem;">{member.name}</h3>
             <p class="team-card__league">{member.role}</p>
             {member.email && (
