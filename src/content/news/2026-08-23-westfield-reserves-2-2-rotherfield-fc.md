@@ -5,6 +5,7 @@ author: "S. McInnes"
 category: match-report
 team: first
 excerpt: "Rotherfield FC started their 2026/27 league campaign with a point away from home after a dramatic 2-2 draw against Westfield Reserves."
+image: /rfc-astro/images/bf162e_687b6adf7ce74c088d298f2ab465983a~mv2.avif
 ---
 
 Rotherfield FC started their 2026/27 league campaign with a point away from home after a 2-2 draw against Westfield Reserves. Two long-range strikes from Jack Spampanato and Finlay McLeod were two high points in a dramatic affair at the Knight & Davey Community Stadium.

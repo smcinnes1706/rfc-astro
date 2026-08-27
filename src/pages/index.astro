@@ -104,7 +104,7 @@ const heroImage: string | null = '/rfc-astro/images/home-hero.avif';
           <h2>Latest News</h2>
           <p>Match reports, club updates and more</p>
         </div>
-        <a href="/news" class="btn btn--outline">All News →</a>
+        <a href={`${import.meta.env.BASE_URL}/news`} class="btn btn--outline">All News →</a>
       </div>
       <div class="news-grid">
         {latestNews.map(entry => (
@@ -123,9 +123,9 @@ const heroImage: string | null = '/rfc-astro/images/home-hero.avif';
                 )}
                 <span class="news-card__date">{formatDate(entry.data.date)}</span>
               </div>
-              <h3 class="news-card__title"><a href={`/news/${entry.id}`}>{entry.data.title}</a></h3>
+              <h3 class="news-card__title"><a href={`${import.meta.env.BASE_URL}/news/${entry.id}`}>{entry.data.title}</a></h3>
               <p class="news-card__excerpt">{entry.data.excerpt}</p>
-              <a class="news-card__link" href={`/news/${entry.id}`}>Read more →</a>
+              <a class="news-card__link" href={`${import.meta.env.BASE_URL}/news/${entry.id}`}>Read more →</a>
             </div>
           </article>
         ))}
@@ -147,7 +147,7 @@ const heroImage: string | null = '/rfc-astro/images/home-hero.avif';
               {lastResult.homeTeam} <span class={resultClass(lastResult.result!, lastResult.isHome)}>{lastResult.result}</span> {lastResult.awayTeam}
             </p>
             <p style="font-size: 0.8rem; color: var(--grey-mid);">{lastResult.venue}</p>
-            <a href="/fixtures" style="display:inline-block; margin-top: 1rem;" class="btn btn--primary">All Results →</a>
+            <a href={`${import.meta.env.BASE_URL}/fixtures`} style="display:inline-block; margin-top: 1rem;" class="btn btn--primary">All Results →</a>
           </div>
         )}
         {nextFixture && (
@@ -160,7 +160,7 @@ const heroImage: string | null = '/rfc-astro/images/home-hero.avif';
               {nextFixture.homeTeam} vs {nextFixture.awayTeam}
             </p>
             <p style="font-size: 0.8rem; color: var(--grey-mid);">{nextFixture.venue}</p>
-            <a href="/fixtures" style="display:inline-block; margin-top: 1rem;" class="btn btn--primary">All Fixtures →</a>
+            <a href={`${import.meta.env.BASE_URL}/fixtures`} style="display:inline-block; margin-top: 1rem;" class="btn btn--primary">All Fixtures →</a>
           </div>
         )}
       </div>
@@ -190,7 +190,7 @@ const heroImage: string | null = '/rfc-astro/images/home-hero.avif';
     </div>
     <div class="container" style="padding-top:0.75rem; padding-bottom:0;">
       <p style="font-size:0.8rem; color:rgba(255,255,255,0.6); text-align:center;">
-        <a href="/sponsors" style="color:rgba(255,255,255,0.85); font-weight:600;">View all sponsors →</a>
+        <a href={`${import.meta.env.BASE_URL}/sponsors`} style="color:rgba(255,255,255,0.85); font-weight:600;">View all sponsors →</a>
       </p>
     </div>
   </div>
