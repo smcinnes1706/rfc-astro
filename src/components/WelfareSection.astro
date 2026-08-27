@@ -22,7 +22,7 @@ const { welfareContacts } = Astro.props as Props;
 
 <div class="welfare-grid">
   {welfareContacts.map(member => (
-    <div class="card team-card team-card--has-image">
+    <div class={`card team-card team-card--portrait${member.image ? ' team-card--has-image' : ''}`} style="border-top-color:#7c3aed;">
       <div class="team-card__media">
         {member.image
           ? <img src={member.image} alt={member.name} class="team-card__banner" />

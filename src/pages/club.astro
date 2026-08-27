@@ -27,16 +27,17 @@ import { history } from '../data/club';
   <section class="section">
     <div class="container">
       <div class="tab-bar" role="tablist">
-        <button class="tab-btn active" role="tab" aria-selected="true" data-tab="history">History</button>
-        <button class="tab-btn" role="tab" aria-selected="false" data-tab="contacts">Contacts</button>
+        <button class="tab-btn active" role="tab" aria-selected="true" data-tab="contacts">Contacts</button>
+        <button class="tab-btn" role="tab" aria-selected="false" data-tab="history">History</button>
       </div>
 
-      <div id="tab-history" class="tab-panel active">
-        <ClubHistorySection history={history} />
-      </div>
 
-      <div id="tab-contacts" class="tab-panel">
+
+      <div id="tab-contacts" class="tab-panel active">
         <ClubContactsSection committee={committee} />
+      </div>
+      <div id="tab-history" class="tab-panel">
+        <ClubHistorySection history={history} />
       </div>
     </div>
   </section>
