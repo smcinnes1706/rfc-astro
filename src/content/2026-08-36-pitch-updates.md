@@ -7,4 +7,3 @@
   excerpt: 'Our annual general meeting will be held...',
   body: `Full details here...`,
 }
-mange toute

@@ -56,6 +56,7 @@ export const teams: Team[] = [
     shortLabel: 'Veterans',
     rfcDisplayName: 'Rotherfield Vets',
     badgeClass: 'badge--veterans',
+    image: '/rfc-astro/images/teams/veterans.jpg',
   },
   {
     id: 'juniors-u6-u11',
