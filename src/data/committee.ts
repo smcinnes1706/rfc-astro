@@ -30,6 +30,7 @@ export const committee: CommitteeMember[] = [
     email: 'enquiriesrfc1893@gmail.com',
     sections: ['senior-club', 'welfare'],
     image: '/rfc-astro/images/contacts/pteague.avif',
+    bio: 'Phill has been involved with the club for many years and has been a key figure in the club\'s development. He is also the Adult Club Welfare Officer, ensuring that all players and members are safe and supported.',
   },
   {
     name: 'Nik Kennett',
@@ -79,7 +80,7 @@ export const committee: CommitteeMember[] = [
     role: 'Junior Club Welfare Officer',
     email: 'welfare.rjfc@gmail.com',
     image: '/rfc-astro/images/contacts/aimeeb.avif',
-    intro: 'Aimee has had involvement with the club for a number of years and in 2024 took on the role of Junior CWO.',
+    bio: 'Aimee has had involvement with the club for a number of years and in 2024 took on the role of Junior CWO.',
     sections: ['junior-club', 'welfare'],
   },
   {

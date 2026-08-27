@@ -1,6 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
+import HomeHeroSection from '../components/HomeHeroSection.astro';
+import HomeNewsSection from '../components/HomeNewsSection.astro';
+import HomeSponsorsSection from '../components/HomeSponsorsSection.astro';
 import { sponsors } from '../data/sponsors';
 import { fixtureTeamMetaByKey } from '../data/teams';
 
@@ -43,45 +46,13 @@ const categoryLabel: Record<string, string> = {
 const heroImage: string | null = '/rfc-astro/images/home-hero.avif';
 ---
 <Layout title="Home">
-  <!-- Hero image with fixture overlay -->
-  {heroImage && (
-    <div class="container" style="padding-top:1.5rem; padding-bottom:0; position:relative; line-height:0;">
-      <img
-        src={heroImage}
-        alt="Rotherfield FC"
-        style="width:100%; max-height:480px; object-fit:cover; object-position:center; display:block; border-radius:10px;"
-      />
-      {nextFixture && (
-        <div class="hero-badge hero-badge--overlay">
-          <p class="fixture-label">Next Fixture</p>
-          <p class="fixture-date">{formatDate(nextFixture.date)} · {nextFixture.time}</p>
-          <p class="fixture-teams">
-            {nextFixture.isHome ? <strong>{fixtureTeamMetaByKey[nextFixture.team].rfcDisplayName}</strong> : nextFixture.homeTeam}<br />
-            vs<br />
-            {nextFixture.isHome ? nextFixture.awayTeam : <strong>{fixtureTeamMetaByKey[nextFixture.team].rfcDisplayName}</strong>}
-          </p>
-          <p class="fixture-comp">{nextFixture.competition}</p>
-        </div>
-      )}
-    </div>
-  )}
+  <HomeHeroSection
+    heroImage={heroImage}
+    nextFixture={nextFixture ?? null}
+    fixtureTeamMetaByKey={fixtureTeamMetaByKey}
+    formatDate={formatDate}
+  />
 
-  {!heroImage && nextFixture && (
-    <div class="container" style="padding-top:1.5rem; padding-bottom:0;">
-      <div class="hero-badge hero-badge--standalone">
-        <p class="fixture-label">Next Fixture</p>
-        <p class="fixture-date">{formatDate(nextFixture.date)} · {nextFixture.time}</p>
-        <p class="fixture-teams">
-          {nextFixture.isHome ? <strong>{fixtureTeamMetaByKey[nextFixture.team].rfcDisplayName}</strong> : nextFixture.homeTeam}<br />
-          vs<br />
-          {nextFixture.isHome ? nextFixture.awayTeam : <strong>{fixtureTeamMetaByKey[nextFixture.team].rfcDisplayName}</strong>}
-        </p>
-        <p class="fixture-comp">{nextFixture.competition}</p>
-      </div>
-    </div>
-  )}
-
-  <!-- Welcome / club intro -->
   <section class="section" style="padding-bottom:0;">
     <div class="container">
       <div style="padding-left:0;">
@@ -96,46 +67,13 @@ const heroImage: string | null = '/rfc-astro/images/home-hero.avif';
     </div>
   </section>
 
-  <!-- Latest News -->
-  <section class="section">
-    <div class="container">
-      <div class="section-header section-header--flex">
-        <div>
-          <h2>Latest News</h2>
-          <p>Match reports, club updates and more</p>
-        </div>
-        <a href={`${import.meta.env.BASE_URL}/news`} class="btn btn--outline">All News →</a>
-      </div>
-      <div class="news-grid">
-        {latestNews.map(entry => (
-          <article class={`card news-card${entry.data.image ? ' news-card--has-image' : ''}`}>
-            <a href={`${import.meta.env.BASE_URL}/news/${entry.id}`} aria-label={`Read article: ${entry.data.title}`}>
-              {entry.data.image
-                ? <img src={entry.data.image} alt={entry.data.title} class="news-card__img news-card__img--photo" />
-                : <div class="news-card__img">⚽</div>
-              }
-            </a>
-            <div class="card__body news-card__body">
-              <div class="news-card__meta">
-                <span class={`badge ${entry.data.category === 'match-report' ? 'badge--green' : entry.data.category === 'juniors' ? 'badge--gold' : 'badge--grey'}`}>
-                  {categoryLabel[entry.data.category]}
-                </span>
-                {entry.data.team && (
-                  <span class={`badge ${fixtureTeamMetaByKey[entry.data.team].badgeClass}`}>{fixtureTeamMetaByKey[entry.data.team].label}</span>
-                )}
-                <span class="news-card__date">{formatDate(entry.data.date)}</span>
-              </div>
-              <h3 class="card__title news-card__title"><a href={`${import.meta.env.BASE_URL}/news/${entry.id}`}>{entry.data.title}</a></h3>
-              <p class="news-card__excerpt">{entry.data.excerpt}</p>
-              <a class="news-card__link" href={`${import.meta.env.BASE_URL}/news/${entry.id}`}>Read more →</a>
-            </div>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
+  <HomeNewsSection
+    latestNews={latestNews}
+    categoryLabel={categoryLabel}
+    formatDate={formatDate}
+    fixtureTeamMetaByKey={fixtureTeamMetaByKey}
+  />
 
-  <!-- Last Result + Next Fixture side by side -->
   <section class="section section--alt">
     <div class="container">
       <div class="info-split">
@@ -169,39 +107,5 @@ const heroImage: string | null = '/rfc-astro/images/home-hero.avif';
     </div>
   </section>
 
-  <!-- Sponsors -->
-  <div class="cta-bar">
-    <div class="container" style="padding-bottom:0.5rem;">
-      <h2>Our Sponsors</h2>
-    </div>
-    <div class="sponsors-carousel" aria-label="Sponsors" role="marquee">
-      <div class="sponsors-track">
-        {[...sponsors, ...sponsors].map((s, i) => (
-          <a
-            href={s.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="sponsor-logo sponsor-logo--dark"
-            tabindex={i >= sponsors.length ? -1 : 0}
-            aria-hidden={i >= sponsors.length ? 'true' : undefined}
-            aria-label={s.name}
-          >
-            {s.image ? (
-              <span class="sponsor-logo__media">
-                <img src={s.image} alt={s.name} class="sponsor-logo__image" />
-                <span class="sponsor-logo__tooltip">{s.name}</span>
-              </span>
-            ) : (
-              s.name
-            )}
-          </a>
-        ))}
-      </div>
-    </div>
-    <div class="container" style="padding-top:0.75rem; padding-bottom:0;">
-      <p class="sponsor-link-row">
-        <a href={`${import.meta.env.BASE_URL}/sponsors`} class="sponsor-link">View all sponsors →</a>
-      </p>
-    </div>
-  </div>
+  <HomeSponsorsSection sponsors={sponsors} />
 </Layout>

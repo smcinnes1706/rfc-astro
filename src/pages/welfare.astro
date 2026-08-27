@@ -1,27 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import WelfareSection from '../components/WelfareSection.astro';
+import PoliciesSection from '../components/PoliciesSection.astro';
 import { committee } from '../data/committee';
-import { policyDocuments } from '../data/policies';
 
-const categoryLabel: Record<string, string> = {
-  safeguarding: 'Safeguarding',
-  conduct: 'Respect & Conduct',
-  equality: 'Equality',
-  general: 'General',
-};
-
-const categoryOrder = ['safeguarding', 'conduct', 'equality', 'general'];
-const grouped = categoryOrder.map(cat => ({
-  category: cat,
-  label: categoryLabel[cat],
-  docs: policyDocuments.filter(d => d.category === cat),
-}));
-
-function formatUpdated(dateStr: string) {
-  return new Date(dateStr).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
-}
-
-const welfareContacts = committee.filter(member => member.role.includes('Welfare'));
+const welfareContacts = committee.filter(member => (member.sections ?? [member.section]).some(section => section === 'welfare'));
 
 const policies = [
   {
@@ -113,95 +96,11 @@ const policies = [
       </div>
 
       <div id="tab-welfare" class="tab-panel active">
-        <div class="welfare-intro">
-          <p>
-            Rotherfield Football Club is committed to safeguarding all children that play at our club. We have two dedicated Child Welfare Officers at Rotherfield FC over both the Juniors and Adult sections.
-          </p>
-          <p>
-            Our Welfare Officers are a point of contact for anyone who wishes to raise concerns about any Child Welfare concerns. They have both completed CRCs and have attended a Welfare Officers Course from Football England Learning. If you need to raise a concern then please contact the relevant Officer below.
-          </p>
-          <p>
-            If there is an incident that needs to be reported that cannot be resolved by the club then please use fill in the Club's Incident Form here.
-          </p>
-        </div>
-
-        <div class="welfare-grid">
-          {welfareContacts.map(member => (
-            <div class="card team-card team-card--has-image">
-              <div class="team-card__media">
-                {member.image
-                  ? <img src={member.image} alt={member.name} class="team-card__banner" />
-                  : <div class="team-card__icon">{member.icon}</div>
-                }
-              </div>
-              <div class="team-card__content">
-                <h3 class="card__title">{member.name}</h3>
-                <p class="team-card__league">{member.role}</p>
-                <p class="welfare-card__intro">{member.intro}</p>
-                <a href={`mailto:${member.email}?subject=Welfare%20Enquiry`} class="team-card__cta">Email →</a>
-              </div>
-            </div>
-          ))}
-        </div>
+        <WelfareSection welfareContacts={welfareContacts} />
       </div>
 
       <div id="tab-policies" class="tab-panel">
-        <div style="background:var(--green-pale); border:1px solid #b7e4c7; border-radius:10px; padding:1rem 1.25rem; margin-bottom:1.5rem;">
-          <p style="font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--green-dark); margin:0 0 0.3rem;">Club Welfare Officer</p>
-          <p style="margin:0; font-size:0.9rem; color:var(--green-dark);">For any safeguarding or welfare concern, contact us in confidence.</p>
-        </div>
-
-        <div style="background:var(--off-white); border:1px solid var(--grey-light); border-radius:10px; padding:0.75rem 1rem; margin-bottom:1.5rem; display:flex; flex-wrap:wrap; gap:0.5rem 1rem;">
-          {policies.map(p => (
-            <a href={`#${p.id}`} style="font-size:0.8rem; font-weight:600; color:var(--green-mid);">{p.title}</a>
-          ))}
-        </div>
-
-        <div style="display:flex; flex-direction:column; gap:2.5rem; max-width:800px;">
-          {policies.map(policy => (
-            <div id={policy.id} style="scroll-margin-top:80px;">
-              <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.75rem;">
-                <span style="font-size:1.5rem;">{policy.icon}</span>
-                <h2 style="font-size:1.3rem;">{policy.title}</h2>
-              </div>
-              <div style="border-left:4px solid var(--green-light); padding-left:1.25rem; display:flex; flex-direction:column; gap:0.85rem;">
-                {policy.body.map(para => (
-                  <p style="font-size:0.9rem; color:#374151; line-height:1.75; white-space:pre-line;">{para}</p>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <section class="section section--alt" style="padding-top:2rem; padding-bottom:0; margin-top:2rem;">
-          <div class="container" style="padding-left:0; padding-right:0;">
-            <div class="section-header">
-              <h2>External Resources</h2>
-              <p>Useful links for safeguarding, welfare and FA policies.</p>
-            </div>
-            <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr)); gap:1rem; max-width:800px;">
-              {[
-                { label: 'FA Safeguarding Hub', url: 'https://www.thefa.com/football-rules-governance/safeguarding' },
-                { label: 'FA Respect Programme', url: 'https://www.thefa.com/football-rules-governance/respect' },
-                { label: 'NSPCC Child Protection', url: 'https://www.nspcc.org.uk/' },
-                { label: 'Sussex County FA', url: 'https://www.sussexfa.com/' },
-                { label: 'Childline', url: 'https://www.childline.org.uk/' },
-                { label: 'Report Child Abuse (NSPCC)', url: 'https://www.nspcc.org.uk/keeping-children-safe/reporting-abuse/' },
-              ].map(link => (
-                <a
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="sponsor-card"
-                  style="display:block; text-align:left; padding:1rem 1.1rem;"
-                >
-                  <p style="font-size:0.875rem; font-weight:600; color:var(--green-dark); margin-bottom:0.2rem;">{link.label}</p>
-                  <p style="font-size:0.75rem; color:var(--green-mid);">Visit website →</p>
-                </a>
-              ))}
-            </div>
-          </div>
-        </section>
+        <PoliciesSection policies={policies} />
       </div>
     </div>
   </section>

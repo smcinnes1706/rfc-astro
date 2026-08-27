@@ -1,0 +1,55 @@
+---
+interface Props {
+  heroImage: string | null;
+  nextFixture: {
+    date: string;
+    time: string;
+    team: string;
+    competition: string;
+    isHome: boolean;
+    homeTeam: string;
+    awayTeam: string;
+  } | null;
+  fixtureTeamMetaByKey: Record<string, any>;
+  formatDate: (dateStr: string) => string;
+}
+
+const { heroImage, nextFixture, fixtureTeamMetaByKey, formatDate } = Astro.props as Props;
+---
+
+{heroImage && (
+  <div class="container" style="padding-top:1.5rem; padding-bottom:0; position:relative; line-height:0;">
+    <img
+      src={heroImage}
+      alt="Rotherfield FC"
+      style="width:100%; max-height:480px; object-fit:cover; object-position:center; display:block; border-radius:10px;"
+    />
+    {nextFixture && (
+      <div class="hero-badge hero-badge--overlay">
+        <p class="fixture-label">Next Fixture</p>
+        <p class="fixture-date">{formatDate(nextFixture.date)} · {nextFixture.time}</p>
+        <p class="fixture-teams">
+          {nextFixture.isHome ? <strong>{fixtureTeamMetaByKey[nextFixture.team].rfcDisplayName}</strong> : nextFixture.homeTeam}<br />
+          vs<br />
+          {nextFixture.isHome ? nextFixture.awayTeam : <strong>{fixtureTeamMetaByKey[nextFixture.team].rfcDisplayName}</strong>}
+        </p>
+        <p class="fixture-comp">{nextFixture.competition}</p>
+      </div>
+    )}
+  </div>
+)}
+
+{!heroImage && nextFixture && (
+  <div class="container" style="padding-top:1.5rem; padding-bottom:0;">
+    <div class="hero-badge hero-badge--standalone">
+      <p class="fixture-label">Next Fixture</p>
+      <p class="fixture-date">{formatDate(nextFixture.date)} · {nextFixture.time}</p>
+      <p class="fixture-teams">
+        {nextFixture.isHome ? <strong>{fixtureTeamMetaByKey[nextFixture.team].rfcDisplayName}</strong> : nextFixture.homeTeam}<br />
+        vs<br />
+        {nextFixture.isHome ? nextFixture.awayTeam : <strong>{fixtureTeamMetaByKey[nextFixture.team].rfcDisplayName}</strong>}
+      </p>
+      <p class="fixture-comp">{nextFixture.competition}</p>
+    </div>
+  </div>
+)}

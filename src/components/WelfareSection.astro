@@ -1,0 +1,40 @@
+---
+import type { CommitteeMember } from '../data/committee';
+
+interface Props {
+  welfareContacts: CommitteeMember[];
+}
+
+const { welfareContacts } = Astro.props as Props;
+---
+
+<div class="welfare-intro">
+  <p>
+    Rotherfield Football Club is committed to safeguarding all children that play at our club. We have two dedicated Child Welfare Officers at Rotherfield FC over both the Juniors and Adult sections.
+  </p>
+  <p>
+    Our Welfare Officers are a point of contact for anyone who wishes to raise concerns about any Child Welfare concerns. They have both completed CRCs and have attended a Welfare Officers Course from Football England Learning. If you need to raise a concern then please contact the relevant Officer below.
+  </p>
+  <p>
+    If there is an incident that needs to be reported that cannot be resolved by the club then please use fill in the Club's Incident Form here.
+  </p>
+</div>
+
+<div class="welfare-grid">
+  {welfareContacts.map(member => (
+    <div class="card team-card team-card--has-image">
+      <div class="team-card__media">
+        {member.image
+          ? <img src={member.image} alt={member.name} class="team-card__banner" />
+          : <div class="team-card__icon">{member.icon}</div>
+        }
+      </div>
+      <div class="team-card__content">
+        <h3 class="card__title">{member.name}</h3>
+        <p class="team-card__league">{member.role}</p>
+        <p class="welfare-card__intro">{member.intro}</p>
+        <a href={`mailto:${member.email}?subject=Welfare%20Enquiry`} class="team-card__cta">Email →</a>
+      </div>
+    </div>
+  ))}
+</div>

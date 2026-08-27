@@ -1,0 +1,48 @@
+---
+interface Sponsor {
+  name: string;
+  url?: string;
+  image?: string;
+}
+
+interface Props {
+  sponsors: Sponsor[];
+}
+
+const { sponsors } = Astro.props as Props;
+---
+
+<div class="cta-bar">
+  <div class="container" style="padding-bottom:0.5rem;">
+    <h2>Our Sponsors</h2>
+  </div>
+  <div class="sponsors-carousel" aria-label="Sponsors" role="marquee">
+    <div class="sponsors-track">
+      {[...sponsors, ...sponsors].map((s, i) => (
+        <a
+          href={s.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="sponsor-logo sponsor-logo--dark"
+          tabindex={i >= sponsors.length ? -1 : 0}
+          aria-hidden={i >= sponsors.length ? 'true' : undefined}
+          aria-label={s.name}
+        >
+          {s.image ? (
+            <span class="sponsor-logo__media">
+              <img src={s.image} alt={s.name} class="sponsor-logo__image" />
+              <span class="sponsor-logo__tooltip">{s.name}</span>
+            </span>
+          ) : (
+            s.name
+          )}
+        </a>
+      ))}
+    </div>
+  </div>
+  <div class="container" style="padding-top:0.75rem; padding-bottom:0;">
+    <p class="sponsor-link-row">
+      <a href={`${import.meta.env.BASE_URL}/sponsors`} class="sponsor-link">View all sponsors →</a>
+    </p>
+  </div>
+</div>
