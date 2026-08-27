@@ -7,6 +7,11 @@ interface Props {
 }
 
 const { latestNews, categoryLabel, formatDate, fixtureTeamMetaByKey } = Astro.props as Props;
+const categoryBadgeClass: Record<string, string> = {
+  'match-report': 'badge--match-report',
+  'club-news': 'badge--club-news',
+  'juniors': 'badge--juniors',
+};
 ---
 
 <section class="section">
@@ -29,7 +34,7 @@ const { latestNews, categoryLabel, formatDate, fixtureTeamMetaByKey } = Astro.pr
           </a>
           <div class="card__body news-card__body">
             <div class="news-card__meta">
-              <span class={`badge ${entry.data.category === 'match-report' ? 'badge--green' : entry.data.category === 'juniors' ? 'badge--gold' : 'badge--grey'}`}>
+              <span class={`badge ${categoryBadgeClass[entry.data.category] ?? 'badge--club-news'}`}>
                 {categoryLabel[entry.data.category]}
               </span>
               {entry.data.team && (

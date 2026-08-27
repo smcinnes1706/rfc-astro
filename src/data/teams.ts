@@ -50,6 +50,7 @@ export const teams: Team[] = [
     description:
       'Our veteran side for players aged 35 and over, competing in the Sussex Sunday Football League.',
     league: 'Sussex Sunday Football League',
+    manager: 'Stuart McInnes',
     contactEmail: 'enquiriesrfc1893@gmail.com',
     type: 'vets',
     fixtureKey: 'veterans',

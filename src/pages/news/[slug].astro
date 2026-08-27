@@ -20,6 +20,12 @@ const categoryLabel = {
   "juniors": "Juniors",
 };
 
+const categoryBadgeClass = {
+  "match-report": "badge--match-report",
+  "club-news": "badge--club-news",
+  "juniors": "badge--juniors",
+};
+
 function formatDate(dateStr) {
   return new Date(dateStr).toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
 }
@@ -45,7 +51,7 @@ function formatDate(dateStr) {
           />
         )}
         <div class="article-meta">
-          <span class={`badge ${entry.data.category === "match-report" ? "badge--green" : entry.data.category === "juniors" ? "badge--gold" : "badge--grey"}`}>
+          <span class={`badge ${categoryBadgeClass[entry.data.category] ?? "badge--club-news"}`}>
             {categoryLabel[entry.data.category]}
           </span>
           {entry.data.team && (
