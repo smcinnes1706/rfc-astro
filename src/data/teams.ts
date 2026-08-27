@@ -1,8 +1,3 @@
-export interface TeamMember {
-  name: string;
-  role: string;
-}
-
 export interface Team {
   id: string;
   name: string;
