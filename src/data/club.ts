@@ -1,25 +1,3 @@
-export interface CommitteeMember {
-  name: string;
-  role: string;
-  email?: string;
-  image?: string;
-}
-
-export const committee: CommitteeMember[] = [
-  { name: 'Pete Ford', role: 'Chairman', image: '/rfc-astro/images/contacts/pford.avif' },
-  { name: 'TBC', role: 'Vice Chairman' },
-  { name: 'TBC', role: 'Club Secretary', email: 'enquiriesrfc1893@gmail.com' },
-  { name: 'TBC', role: 'Treasurer' },
-  { name: 'TBC', role: 'Fixture Secretary' },
-  { name: 'Wayne Clarke', role: 'First Team Manager', image: '/rfc-astro/images/contacts/wclarke.avif' },
-  { name: 'TBC', role: 'Reserves Manager' },
-  { name: 'Stuart McInnes', role: 'Veterans Manager', image: '/rfc-astro/images/contacts/smcinnes.avif' },
-  { name: 'TBC', role: 'Head of Junior Football' },
-  { name: 'TBC', role: 'Club Welfare Officer', email: 'enquiriesrfc1893@gmail.com' },
-  { name: 'Elliot Ridley-Smith', role: 'Social Media Officer', image : '/rfc-astro/images/contacts/eridleysmith.avif' },
-
-];
-
 export interface HistoryMilestone {
   year: string;
   event: string;

@@ -1,0 +1,92 @@
+---
+import type { CommitteeMember } from '../data/committee';
+
+interface Props {
+  committee: CommitteeMember[];
+}
+
+const { committee } = Astro.props as Props;
+const seniorClubOfficers = committee.filter(m => (m.sections ?? [m.section]).some(section => section === 'senior-club'));
+const juniorClubOfficers = committee.filter(m => (m.sections ?? [m.section]).some(section => section === 'junior-club'));
+const welfareOfficers = committee.filter(m => (m.sections ?? [m.section]).some(section => section === 'welfare'));
+---
+
+<div class="section-header">
+  <h2>Club Committee &amp; Officers</h2>
+  <p>The volunteers who run Rotherfield FC behind the scenes.</p>
+</div>
+
+<h3 style="font-size:1rem; text-transform:uppercase; letter-spacing:.06em; color:var(--grey-mid); margin-bottom:1rem; font-weight:600;">Senior Club Officers</h3>
+<div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:1rem; margin-bottom:2.5rem;">
+  {seniorClubOfficers.map(member => (
+    <div class={`card team-card${member.image ? ' team-card--has-image' : ''}`} style="border-top-color:var(--green-dark);">
+      <div class="team-card__media">
+        {member.image
+          ? <img src={member.image} alt={member.name} class="team-card__banner" />
+          : <div class="team-card__icon">👤</div>
+        }
+      </div>
+      <div class="team-card__content">
+        <h3 class="card__title">{member.name}</h3>
+        <p class="team-card__league">{member.role}</p>
+        {member.email ? (
+          <a href={`mailto:${member.email}?subject=${encodeURIComponent(member.role + ' Enquiry')}`} class="team-card__cta">
+            Email →
+          </a>
+        ) : (
+          <span class="team-card__cta team-card__cta--placeholder" aria-hidden="true">Email →</span>
+        )}
+      </div>
+    </div>
+  ))}
+</div>
+
+<h3 style="font-size:1rem; text-transform:uppercase; letter-spacing:.06em; color:var(--grey-mid); margin-bottom:1rem; font-weight:600;">Junior Club Officers</h3>
+<div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:1rem; margin-bottom:2.5rem;">
+  {juniorClubOfficers.map(member => (
+    <div class={`card team-card${member.image ? ' team-card--has-image' : ''}`} style="border-top-color:var(--green-mid);">
+      <div class="team-card__media">
+        {member.image
+          ? <img src={member.image} alt={member.name} class="team-card__banner" />
+          : <div class="team-card__icon">🏃</div>
+        }
+      </div>
+      <div class="team-card__content">
+        <h3 class="card__title">{member.name}</h3>
+        <p class="team-card__league">{member.role}</p>
+        {member.email ? (
+          <a href={`mailto:${member.email}`} class="team-card__cta">Email →</a>
+        ) : (
+          <span class="team-card__cta team-card__cta--placeholder" aria-hidden="true">Email →</span>
+        )}
+      </div>
+    </div>
+  ))}
+</div>
+
+<h3 style="font-size:1rem; text-transform:uppercase; letter-spacing:.06em; color:var(--grey-mid); margin-bottom:1rem; font-weight:600;">Welfare Officers</h3>
+<div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:1rem;">
+  {welfareOfficers.map(member => (
+    <div class={`card team-card${member.image ? ' team-card--has-image' : ''}`} style="border-top-color:#7c3aed;">
+      <div class="team-card__media">
+        {member.image
+          ? <img src={member.image} alt={member.name} class="team-card__banner" />
+          : <div class="team-card__icon">🛡️</div>
+        }
+      </div>
+      <div class="team-card__content">
+        <h3 class="card__title">{member.name}</h3>
+        <p class="team-card__league">{member.role}</p>
+        {member.email ? (
+          <a href={`mailto:${member.email}?subject=Welfare%20Enquiry`} class="team-card__cta">Email →</a>
+        ) : (
+          <span class="team-card__cta team-card__cta--placeholder" aria-hidden="true">Email →</span>
+        )}
+      </div>
+    </div>
+  ))}
+</div>
+
+<p style="margin-top:1.75rem; font-size:0.8rem; color:var(--grey-mid);">
+  ℹ️ To update committee details, edit <code>src/data/committee.ts</code>.
+</p>

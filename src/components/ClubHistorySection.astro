@@ -1,0 +1,28 @@
+---
+import type { HistoryMilestone } from '../data/club';
+
+interface Props {
+  history: HistoryMilestone[];
+}
+
+const { history } = Astro.props as Props;
+---
+
+<div class="section-header">
+  <h2>Our History</h2>
+  <p>Over 130 years of football in the heart of Rotherfield village.</p>
+</div>
+<div style="max-width:750px; position:relative;">
+  <div style="position:absolute; left:88px; top:0; bottom:0; width:2px; background:var(--green-pale);"></div>
+  <div style="display:flex; flex-direction:column; gap:0;">
+    {history.map(milestone => (
+      <div style="display:flex; gap:1.5rem; align-items:flex-start; padding:1rem 0; position:relative;">
+        <div style="min-width:80px; text-align:right; font-size:0.8rem; font-weight:700; color:var(--green-mid); padding-top:0.15rem; flex-shrink:0;">
+          {milestone.year}
+        </div>
+        <div style="width:12px; height:12px; border-radius:50%; background:var(--green-mid); flex-shrink:0; margin-top:0.25rem; position:relative; z-index:1;"></div>
+        <p style="font-size:0.9rem; color:#374151; line-height:1.6; padding-top:0; flex:1;">{milestone.event}</p>
+      </div>
+    ))}
+  </div>
+</div>
