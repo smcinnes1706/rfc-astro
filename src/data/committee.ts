@@ -19,6 +19,11 @@ export interface CommitteeMember {
 
 export const committee: CommitteeMember[] = [
   {
+    name: 'Roddy Harmon',
+    role: 'Honorary President',
+    sections: ['senior-club'],
+  },
+  {
     name: 'Pete Ford',
     role: 'Chairman',
     image: '/rfc-astro/images/contacts/pford.jpg',
