@@ -12,27 +12,13 @@ import { history } from '../data/club';
       <p>Everything about Rotherfield Football Club — our history, our people and our values.</p>
     </div>
   </div>
-
-  <!-- Quick facts bar -->
-  <div style="background:var(--green-pale); border-bottom:1px solid #b7e4c7;">
-    <div class="container" style="padding-top:0.9rem; padding-bottom:0.9rem; display:flex; flex-wrap:wrap; gap:1.5rem; font-size:0.85rem; color:var(--green-dark); font-weight:500;">
-      <span>📅 Founded: <strong>1893</strong></span>
-      <span>🏟️ Ground: <strong>Rotherfield Recreation Ground</strong></span>
-      <span>👕 Colours: <strong>Green &amp; White</strong></span>
-      <span>🏆 League: <strong>Gray Hooper Holt Mid Sussex Football League</strong></span>
-      <span>📍 <strong>TN6 3LX</strong></span>
-    </div>
-  </div>
-
+  
   <section class="section">
     <div class="container">
       <div class="tab-bar" role="tablist">
         <button class="tab-btn active" role="tab" aria-selected="true" data-tab="contacts">Contacts</button>
         <button class="tab-btn" role="tab" aria-selected="false" data-tab="history">History</button>
       </div>
-
-
-
       <div id="tab-contacts" class="tab-panel active">
         <ClubContactsSection committee={committee} />
       </div>
