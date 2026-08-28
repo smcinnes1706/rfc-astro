@@ -1,10 +1,10 @@
 ---
-date: "2026-09-06"
+date: "2026-08-29"
 time: "14:00"
-homeTeam: "Haywards Heath Town Res."
+homeTeam: "EMC Academy"
 awayTeam: "Rotherfield FC"
 competition: "Mid Sussex League Premier"
-venue: "Hanbury Park"
+venue: "Whyteleafe Football Groun"
 isHome: false
 team: first
 ---

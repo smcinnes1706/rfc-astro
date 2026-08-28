@@ -36,7 +36,7 @@ export const teams: Team[] = [
     id: 'reserves',
     name: 'Reserves',
     description:
-      'Our reserve side competing in the Mid Sussex Football League Division 2 South.',
+      'Our reserve side competing in the Gray Hooper Holt Mid Sussex Football League Division 1 South.                                                        ',
     league: 'Mid Sussex League — Division 1 South',
     manager: 'Richard Holman',
     contactEmail: 'enquiriesrfc1893@gmail.com',

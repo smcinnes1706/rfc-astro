@@ -1,10 +1,10 @@
 ---
-date: "2026-08-30"
+date: "2026-09-12"
 time: "14:00"
 homeTeam: "Rotherfield FC"
-awayTeam: "Crowborough Athletic Res."
+awayTeam: "Crowhurst"
 competition: "Mid Sussex League Premier"
-venue: "Rotherfield Recreation Ground"
+venue: "Rotherfield Recreation Groun"
 isHome: true
 team: first
 ---
