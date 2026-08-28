@@ -1,0 +1,37 @@
+---
+import { fixtureTeamMetaByKey } from '../data/teams';
+
+interface Props {
+  fixtures: any[];
+  formatDate: (dateStr: string) => string;
+}
+
+const { fixtures, formatDate } = Astro.props as Props;
+---
+
+<div class="fixture-card-list">
+  {fixtures.map(f => {
+    const homeTeam = f.data.isHome ? fixtureTeamMetaByKey[f.data.team].rfcDisplayName : f.data.homeTeam;
+    const awayTeam = f.data.isHome ? f.data.awayTeam : fixtureTeamMetaByKey[f.data.team].rfcDisplayName;
+
+    return (
+      <article class="fixture-card">
+        <div class="fixture-card__top">
+          <span class={`badge ${fixtureTeamMetaByKey[f.data.team].badgeClass}`}>{fixtureTeamMetaByKey[f.data.team].label}</span>
+          <span class="fixture-card__competition-line">{f.data.competition}</span>
+          <span class="fixture-card__date">{formatDate(f.data.date)}</span>
+        </div>
+
+        <div class="fixture-card__matchup">
+          <span class={`fixture-card__side ${f.data.isHome ? 'fixture-card__side--rfc' : ''}`}>{homeTeam}</span>
+          <span class="fixture-card__kickoff">{f.data.time}</span>
+          <span class={`fixture-card__side ${!f.data.isHome ? 'fixture-card__side--rfc' : ''}`}>{awayTeam}</span>
+        </div>
+
+        <div class="fixture-card__details">
+          <span class="fixture-card__venue"><strong>Venue:</strong> {f.data.venue}</span>
+        </div>
+      </article>
+    );
+  })}
+</div>
