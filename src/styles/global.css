@@ -385,9 +385,16 @@ h3 { font-size: 1.25rem; }
    Section wrapper
    ============================================= */
 .section { padding: 3.5rem 0; }
-.section--alt { background: var(--off-white); }
+.section--alt { background: var(--off-white); padding-top: 1.75rem; }
 .section--dark { background: var(--green-dark); color: var(--white); }
 .section-header { margin-bottom: 2rem; }
+.teams-story {
+  display: grid;
+  gap: 0.8rem;
+}
+.teams-story p {
+  margin: 0;
+}
 .section-header h2 { margin-bottom: 0.4rem; }
 .section-header p {
   color: var(--grey-mid);
