@@ -21,7 +21,7 @@ export const committee: CommitteeMember[] = [
   {
     name: 'Pete Ford',
     role: 'Chairman',
-    image: '/rfc-astro/images/contacts/pford.avif',
+    image: '/rfc-astro/images/contacts/pford.jpg',
     sections: ['senior-club'],
   },
   {
@@ -29,7 +29,7 @@ export const committee: CommitteeMember[] = [
     role: 'Club Secretary & Adult Club Welfare Officer',
     email: 'enquiriesrfc1893@gmail.com',
     sections: ['senior-club', 'welfare'],
-    image: '/rfc-astro/images/contacts/pteague.avif',
+    image: '/rfc-astro/images/contacts/pteague.jpg',
     bio: 'Phill has been involved with the club for many years and has been a key figure in the club\'s development. He is also the Adult Club Welfare Officer, ensuring that all players and members are safe and supported.',
   },
   {
@@ -48,7 +48,7 @@ export const committee: CommitteeMember[] = [
   {
     name: 'Wayne Clarke',
     role: 'First Team Manager',
-    image: '/rfc-astro/images/contacts/wclarke.avif',
+    image: '/rfc-astro/images/contacts/wclarke.png',
     sections: ['team'],
   },
   {
@@ -60,13 +60,14 @@ export const committee: CommitteeMember[] = [
   {
     name: 'Stuart McInnes',
     role: 'Veterans Manager',
-    image: '/rfc-astro/images/contacts/smcinnes.avif',
+    image: '/rfc-astro/images/contacts/smcinnes.jpg',
     sections: ['senior-club', 'team'],
     email: 'rotherfieldfcvets@gmail.com'
   },
   {
     name: 'Mark Sumner',
     role: 'RJFC Chairman',
+    image: '/rfc-astro/images/contacts/msumner.jpg',
     sections: ['senior-club','junior-club', 'management'],
   },
    {
@@ -91,12 +92,13 @@ export const committee: CommitteeMember[] = [
   {
     name: 'Elliot Ridley-Smith',
     role: 'Social Media Officer',
-    image: '/rfc-astro/images/contacts/eridleysmith.avif',
+    image: '/rfc-astro/images/contacts/eridleysmith.jpg',
     sections: ['senior-club', 'communications'],
   },
   {
     name: 'Hayley Sparks',
     role: 'Club Secretary',
+    image: '/rfc-astro/images/contacts/hsparks.jpg',
     sections: ['junior-club'],
   },
   {
@@ -107,6 +109,7 @@ export const committee: CommitteeMember[] = [
   {
     name: 'Sharon Everest',
     role: 'Registration Secretary',
+    image: '/rfc-astro/images/contacts/severest.jpg',
     sections: ['junior-club'],
     email: 'sharoneverest00@gmail.com'
   },
