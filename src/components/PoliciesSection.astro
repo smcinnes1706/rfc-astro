@@ -6,11 +6,17 @@ interface Policy {
   body: string[];
 }
 
-interface Props {
-  policies: Policy[];
+interface ExternalResource {
+  label: string;
+  url: string;
 }
 
-const { policies } = Astro.props as Props;
+interface Props {
+  policies: Policy[];
+  resources?: ExternalResource[];
+}
+
+const { policies, resources = [] } = Astro.props as Props;
 ---
 
 <div style="background:var(--green-pale); border:1px solid #b7e4c7; border-radius:10px; padding:1rem 1.25rem; margin-bottom:1.5rem;">
@@ -47,14 +53,7 @@ const { policies } = Astro.props as Props;
       <p>Useful links for safeguarding, welfare and FA policies.</p>
     </div>
     <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr)); gap:1rem; max-width:800px;">
-      {[
-        { label: 'FA Safeguarding Hub', url: 'https://www.thefa.com/football-rules-governance/safeguarding' },
-        { label: 'FA Respect Programme', url: 'https://www.thefa.com/football-rules-governance/respect' },
-        { label: 'NSPCC Child Protection', url: 'https://www.nspcc.org.uk/' },
-        { label: 'Sussex County FA', url: 'https://www.sussexfa.com/' },
-        { label: 'Childline', url: 'https://www.childline.org.uk/' },
-        { label: 'Report Child Abuse (NSPCC)', url: 'https://www.nspcc.org.uk/keeping-children-safe/reporting-abuse/' },
-      ].map(link => (
+      {resources.map(link => (
         <a
           href={link.url}
           target="_blank"
