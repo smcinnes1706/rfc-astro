@@ -43,81 +43,67 @@ function formatDate(dateStr: string) {
       </div>
 
       <div id="tab-fixtures" class="tab-panel active">
-        <div class="fixtures-table-wrap">
-          <table class="fixtures-table">
-            <thead>
-              <tr>
-                <th>Team</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Home</th>
-                <th>Away</th>
-                <th>Competition</th>
-                <th>Venue</th>
-              </tr>
-            </thead>
-            <tbody>
-              {fixtures.map(f => (
-                <tr>
-                  <td data-label="Team"><span class={`badge ${fixtureTeamMetaByKey[f.data.team].badgeClass}`}>{fixtureTeamMetaByKey[f.data.team].label}</span></td>
-                  <td data-label="Date">{formatDate(f.data.date)}</td>
-                  <td data-label="Time">{f.data.time}</td>
-                  <td data-label="Home">
-                    {f.data.isHome ? <span class="rfc-team">{fixtureTeamMetaByKey[f.data.team].rfcDisplayName}</span> : f.data.homeTeam}
-                  </td>
-                  <td data-label="Away">
-                    {!f.data.isHome ? <span class="rfc-team">{fixtureTeamMetaByKey[f.data.team].rfcDisplayName}</span> : f.data.awayTeam}
-                  </td>
-                  <td data-label="Competition">{f.data.competition}</td>
-                  <td data-label="Venue">{f.data.venue}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div class="fixture-card-list">
+          {fixtures.map(f => {
+            const homeTeam = f.data.isHome ? fixtureTeamMetaByKey[f.data.team].rfcDisplayName : f.data.homeTeam;
+            const awayTeam = f.data.isHome ? f.data.awayTeam : fixtureTeamMetaByKey[f.data.team].rfcDisplayName;
+
+            return (
+              <article class="fixture-card">
+                <div class="fixture-card__top">
+                  <span class={`badge ${fixtureTeamMetaByKey[f.data.team].badgeClass}`}>{fixtureTeamMetaByKey[f.data.team].label}</span>
+                  <span class="fixture-card__date">{formatDate(f.data.date)}</span>
+                </div>
+
+                <div class="fixture-card__matchup">
+                  <span class={`fixture-card__side ${f.data.isHome ? 'fixture-card__side--rfc' : ''}`}>{homeTeam}</span>
+                  <span class="fixture-card__kickoff">{f.data.time}</span>
+                  <span class={`fixture-card__side ${!f.data.isHome ? 'fixture-card__side--rfc' : ''}`}>{awayTeam}</span>
+                </div>
+
+                <div class="fixture-card__details">
+                  <span><strong>Venue:</strong> {f.data.venue}</span>
+                  <span><strong>Competition:</strong> {f.data.competition}</span>
+                </div>
+              </article>
+            );
+          })}
         </div>
       </div>
 
       <div id="tab-results" class="tab-panel">
-        <div class="fixtures-table-wrap">
-          <table class="fixtures-table">
-            <thead>
-              <tr>
-                <th>Team</th>
-                <th>Date</th>
-                <th>Home</th>
-                <th>Score</th>
-                <th>Away</th>
-                <th>Report</th>
-                <th>Competition</th>
-              </tr>
-            </thead>
-            <tbody>
-              {results.map(r => (
-                <tr>
-                  <td data-label="Team"><span class={`badge ${fixtureTeamMetaByKey[r.data.team].badgeClass}`}>{fixtureTeamMetaByKey[r.data.team].label}</span></td>
-                  <td data-label="Date">{formatDate(r.data.date)}</td>
-                  <td data-label="Home">{r.data.isHome ? <span class="rfc-team">{fixtureTeamMetaByKey[r.data.team].rfcDisplayName}</span> : r.data.homeTeam}</td>
-                  <td data-label="Score" style="font-weight:700; text-align:center;">{r.data.result}</td>
-                  <td data-label="Away">{!r.data.isHome ? <span class="rfc-team">{fixtureTeamMetaByKey[r.data.team].rfcDisplayName}</span> : r.data.awayTeam}</td>
-                  <td data-label="Report" class="report-cell">
+        <div class="fixture-card-list">
+          {results.map(r => {
+            const homeTeam = r.data.isHome ? fixtureTeamMetaByKey[r.data.team].rfcDisplayName : r.data.homeTeam;
+            const awayTeam = r.data.isHome ? r.data.awayTeam : fixtureTeamMetaByKey[r.data.team].rfcDisplayName;
+
+            return (
+              <article class="fixture-card fixture-card--result">
+                <div class="fixture-card__top">
+                  <span class={`badge ${fixtureTeamMetaByKey[r.data.team].badgeClass}`}>{fixtureTeamMetaByKey[r.data.team].label}</span>
+                  <span class="fixture-card__date">{formatDate(r.data.date)}</span>
+                </div>
+
+                <div class="fixture-card__matchup">
+                  <span class={`fixture-card__side ${r.data.isHome ? 'fixture-card__side--rfc' : ''}`}>{homeTeam}</span>
+                  <span class="fixture-card__score">{r.data.result}</span>
+                  <span class={`fixture-card__side ${!r.data.isHome ? 'fixture-card__side--rfc' : ''}`}>{awayTeam}</span>
+                </div>
+
+                <div class="fixture-card__details">
+                  <span><strong>Competition:</strong> {r.data.competition}</span>
+                  <span>
+                    <strong>Report:</strong>
                     {r.data.reportSlug ? (
-                      <a
-                        class="report-link"
-                        href={`${import.meta.env.BASE_URL}/news/${r.data.reportSlug}`}
-                        aria-label={`Read match report: ${r.data.homeTeam} vs ${r.data.awayTeam}`}
-                        title="Read match report"
-                      >
-                        📝
-                      </a>
+                      <a href={`${import.meta.env.BASE_URL}/news/${r.data.reportSlug}`} class="fixture-card__report">Read report</a>
                     ) : (
-                      <span class="report-empty" aria-hidden="true">—</span>
+                      <span class="report-empty">No report</span>
                     )}
-                  </td>
-                  <td data-label="Competition">{r.data.competition}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                  </span>
+                </div>
+              </article>
+            );
+          })}
         </div>
       </div>
     </div>
