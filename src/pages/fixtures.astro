@@ -52,6 +52,7 @@ function formatDate(dateStr: string) {
               <article class="fixture-card">
                 <div class="fixture-card__top">
                   <span class={`badge ${fixtureTeamMetaByKey[f.data.team].badgeClass}`}>{fixtureTeamMetaByKey[f.data.team].label}</span>
+                  <span class="fixture-card__competition-line">{f.data.competition}</span>
                   <span class="fixture-card__date">{formatDate(f.data.date)}</span>
                 </div>
 
@@ -62,8 +63,7 @@ function formatDate(dateStr: string) {
                 </div>
 
                 <div class="fixture-card__details">
-                  <span><strong>Venue:</strong> {f.data.venue}</span>
-                  <span><strong>Competition:</strong> {f.data.competition}</span>
+                  <span class="fixture-card__venue"><strong>Venue:</strong> {f.data.venue}</span>
                 </div>
               </article>
             );
@@ -81,6 +81,7 @@ function formatDate(dateStr: string) {
               <article class="fixture-card fixture-card--result">
                 <div class="fixture-card__top">
                   <span class={`badge ${fixtureTeamMetaByKey[r.data.team].badgeClass}`}>{fixtureTeamMetaByKey[r.data.team].label}</span>
+                  <span class="fixture-card__competition-line">{r.data.competition}</span>
                   <span class="fixture-card__date">{formatDate(r.data.date)}</span>
                 </div>
 
@@ -91,11 +92,10 @@ function formatDate(dateStr: string) {
                 </div>
 
                 <div class="fixture-card__details">
-                  <span><strong>Competition:</strong> {r.data.competition}</span>
                   <span>
                     <strong>Report:</strong>
                     {r.data.reportSlug ? (
-                      <a href={`${import.meta.env.BASE_URL}/news/${r.data.reportSlug}`} class="fixture-card__report">Read report</a>
+                      <a href={`${import.meta.env.BASE_URL}/news/${r.data.reportSlug}`} class="fixture-card__report" aria-label="Read match report">Read <span aria-hidden="true">🔗</span></a>
                     ) : (
                       <span class="report-empty">No report</span>
                     )}

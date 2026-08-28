@@ -470,8 +470,14 @@ h3 { font-size: 1.25rem; }
   align-items: center;
   margin-bottom: 0.6rem;
   flex-wrap: wrap;
+  width: 100%;
 }
-.news-card__date { font-size: 0.78rem; color: var(--grey-mid); }
+.news-card__date {
+  font-size: 0.78rem;
+  color: var(--grey-mid);
+  margin-left: auto;
+  text-align: right;
+}
 .news-card__title a:hover { color: var(--green-mid); }
 .news-card__excerpt { font-size: 0.875rem; color: var(--grey-mid); flex: 1; margin-bottom: 0.9rem; }
 .news-card__link { font-size: 0.85rem; font-weight: 600; color: var(--green-mid); }
@@ -496,7 +502,6 @@ h3 { font-size: 1.25rem; }
 .fixture-card__top {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 0.75rem;
   margin-bottom: 0.9rem;
 }
@@ -504,6 +509,20 @@ h3 { font-size: 1.25rem; }
   font-size: 0.78rem;
   color: var(--grey-mid);
   font-weight: 600;
+  margin-left: auto;
+}
+.fixture-card__competition-line {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--green-dark);
+  text-align: center;
+  min-width: 0;
 }
 .fixture-card__matchup {
   display: grid;
@@ -556,9 +575,18 @@ h3 { font-size: 1.25rem; }
 .fixture-card__details strong {
   color: var(--green-dark);
 }
+
+@media (max-width: 520px) {
+  .fixture-card__details {
+    gap: 0.2rem;
+  }
+}
 .fixture-card__report {
   color: var(--green-mid);
   font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.18rem;
 }
 .fixture-card__report:hover { text-decoration: underline; }
 .result-win  { color: #1a7a3c; font-weight: 700; }
