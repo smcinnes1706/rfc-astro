@@ -3,10 +3,11 @@ import Layout from '../layouts/Layout.astro';
 import WelfareSection from '../components/WelfareSection.astro';
 import PoliciesSection from '../components/PoliciesSection.astro';
 import { committee } from '../data/committee';
-import { clubPolicies, externalResources } from '../data/policies';
+import { clubPolicies, policyDocuments, externalResources } from '../data/policies';
 
 const welfareContacts = committee.filter(member => (member.sections ?? [member.section]).some(section => section === 'welfare'));
 const policies = clubPolicies;
+const policydocuments = policyDocuments;
 const resources = externalResources;
 ---
 <Layout title="Welfare & Policies" description="Rotherfield FC's welfare, safeguarding and club policies.">
@@ -29,7 +30,7 @@ const resources = externalResources;
       </div>
 
       <div id="tab-policies" class="tab-panel">
-        <PoliciesSection policies={policies} resources={resources} />
+        <PoliciesSection policies={policies} policydocs={policydocuments} resources={resources} />
       </div>
     </div>
   </section>
