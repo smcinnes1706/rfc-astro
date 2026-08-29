@@ -15,7 +15,7 @@ const { fixtures, formatDate } = Astro.props as Props;
     const awayTeam = f.data.isHome ? f.data.awayTeam : fixtureTeamMetaByKey[f.data.team].rfcDisplayName;
 
     return (
-      <article class="fixture-card">
+      <article class="fixture-card" data-fixture-card>
         <div class="fixture-card__top">
           <span class={`badge ${fixtureTeamMetaByKey[f.data.team].badgeClass}`}>{fixtureTeamMetaByKey[f.data.team].label}</span>
           <span class="fixture-card__competition-line">{f.data.competition}</span>

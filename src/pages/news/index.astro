@@ -34,7 +34,7 @@ function formatDate(dateStr: string) {
     <div class="container">
       <div class="news-grid">
         {allNews.map(entry => (
-          <article class={`card news-card${entry.data.image ? ' news-card--has-image' : ''}`}>
+          <article data-news-card class={`card news-card${entry.data.image ? ' news-card--has-image' : ''}`}>
             <a href={`${import.meta.env.BASE_URL}/news/${entry.id}`} aria-label={`Read article: ${entry.data.title}`}>
               {entry.data.image
                 ? <img src={entry.data.image} alt={entry.data.title} class="news-card__img news-card__img--photo" />
@@ -60,6 +60,76 @@ function formatDate(dateStr: string) {
           </article>
         ))}
       </div>
+
+      <nav id="news-pagination" class="pagination" aria-label="News pages"></nav>
     </div>
   </section>
 </Layout>
+
+<script>
+  const pageSize = 6;
+  const newsCards = Array.from(document.querySelectorAll('[data-news-card]'));
+  const pagination = document.getElementById('news-pagination');
+  let currentPage = Number(new URLSearchParams(window.location.search).get('page') || '1');
+
+  function renderNewsPage(page) {
+    if (!pagination) return;
+
+    const totalPages = Math.max(1, Math.ceil(newsCards.length / pageSize));
+    const safePage = Math.min(Math.max(page, 1), totalPages);
+    currentPage = safePage;
+
+    const start = (safePage - 1) * pageSize;
+    const end = start + pageSize;
+
+    newsCards.forEach((card, index) => {
+      card.hidden = index < start || index >= end;
+    });
+
+    pagination.innerHTML = '';
+    if (totalPages <= 1) return;
+
+    const prevBtn = document.createElement('button');
+    prevBtn.type = 'button';
+    prevBtn.className = 'pagination__button';
+    prevBtn.textContent = 'Previous';
+    prevBtn.disabled = safePage === 1;
+    prevBtn.addEventListener('click', () => {
+      if (safePage > 1) {
+        const nextPage = safePage - 1;
+        history.replaceState(null, '', `?page=${nextPage}`);
+        renderNewsPage(nextPage);
+      }
+    });
+    pagination.appendChild(prevBtn);
+
+    for (let pageNumber = 1; pageNumber <= totalPages; pageNumber += 1) {
+      const pageBtn = document.createElement('button');
+      pageBtn.type = 'button';
+      pageBtn.className = `pagination__button pagination__button--page ${pageNumber === safePage ? 'pagination__button--active' : ''}`;
+      pageBtn.textContent = String(pageNumber);
+      pageBtn.setAttribute('aria-current', pageNumber === safePage ? 'page' : 'false');
+      pageBtn.addEventListener('click', () => {
+        history.replaceState(null, '', `?page=${pageNumber}`);
+        renderNewsPage(pageNumber);
+      });
+      pagination.appendChild(pageBtn);
+    }
+
+    const nextBtn = document.createElement('button');
+    nextBtn.type = 'button';
+    nextBtn.className = 'pagination__button';
+    nextBtn.textContent = 'Next';
+    nextBtn.disabled = safePage === totalPages;
+    nextBtn.addEventListener('click', () => {
+      if (safePage < totalPages) {
+        const nextPage = safePage + 1;
+        history.replaceState(null, '', `?page=${nextPage}`);
+        renderNewsPage(nextPage);
+      }
+    });
+    pagination.appendChild(nextBtn);
+  }
+
+  renderNewsPage(currentPage);
+</script>

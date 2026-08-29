@@ -8,15 +8,11 @@ const all = await getCollection('fixtures');
 const today = new Date();
 const todayStr = today.toISOString().slice(0, 10);
 
-// Sort all entries by date descending
 all.sort((a, b) => b.data.date.localeCompare(a.data.date));
 
-// Upcoming: no result, date >= today (ascending order for display)
 const fixtures = all
   .filter(f => !f.data.result && f.data.date >= todayStr)
   .reverse();
-
-// Results: has a result field, most recent first
 const results = all.filter(f => !!f.data.result);
 
 function formatDate(dateStr: string) {
@@ -25,6 +21,13 @@ function formatDate(dateStr: string) {
   const month = String(d.getMonth() + 1).padStart(2, '0');
   const year = d.getFullYear();
   return `${day}/${month}/${year}`;
+}
+
+function buildTabPageHref(tab: 'fixtures' | 'results', page: number) {
+  const url = new URL(Astro.url.toString());
+  url.searchParams.set('tab', tab);
+  url.searchParams.set(tab === 'fixtures' ? 'fixturePage' : 'resultPage', String(page));
+  return `${url.pathname}${url.search}`;
 }
 ---
 <Layout title="Fixtures & Results" description="Upcoming fixtures and recent results for Rotherfield FC.">
@@ -37,7 +40,6 @@ function formatDate(dateStr: string) {
 
   <section class="section">
     <div class="container">
-      <!-- Tab UI (JS progressively enhances) -->
       <div class="tab-bar" role="tablist">
         <button class="tab-btn active" role="tab" aria-selected="true" data-tab="fixtures">Upcoming Fixtures</button>
         <button class="tab-btn" role="tab" aria-selected="false" data-tab="results">Recent Results</button>
@@ -45,10 +47,12 @@ function formatDate(dateStr: string) {
 
       <div id="tab-fixtures" class="tab-panel active">
         <FixtureList fixtures={fixtures} formatDate={formatDate} />
+        <nav id="fixtures-pagination" class="pagination" aria-label="Fixtures pages"></nav>
       </div>
 
       <div id="tab-results" class="tab-panel">
         <ResultList results={results} formatDate={formatDate} />
+        <nav id="results-pagination" class="pagination" aria-label="Results pages"></nav>
       </div>
     </div>
   </section>
@@ -56,17 +60,93 @@ function formatDate(dateStr: string) {
 
 <script>
   const tabs = document.querySelectorAll<HTMLButtonElement>('.tab-btn');
+  const pageSize = 6;
+  const fixtureCards = Array.from(document.querySelectorAll('#tab-fixtures [data-fixture-card]'));
+  const resultCards = Array.from(document.querySelectorAll('#tab-results [data-result-card]'));
+  const fixturesPagination = document.getElementById('fixtures-pagination');
+  const resultsPagination = document.getElementById('results-pagination');
 
-  function activateTab(tabKey: string) {
-    tabs.forEach(t => {
-      const isActive = t.dataset.tab === tabKey;
-      t.classList.toggle('active', isActive);
-      t.setAttribute('aria-selected', String(isActive));
+  function updateCardVisibility(cards, activePage) {
+    const start = (activePage - 1) * pageSize;
+    const end = start + pageSize;
+
+    cards.forEach((card, index) => {
+      card.hidden = index < start || index >= end;
     });
+  }
+
+  function renderPagination(container, cards, currentPage, totalPages, tabKey) {
+    if (!container) return;
+
+    container.innerHTML = '';
+    if (totalPages <= 1) return;
+
+    const prevBtn = document.createElement('button');
+    prevBtn.type = 'button';
+    prevBtn.className = 'pagination__button';
+    prevBtn.textContent = 'Previous';
+    prevBtn.disabled = currentPage === 1;
+    prevBtn.addEventListener('click', () => {
+      if (currentPage > 1) {
+        const nextPage = currentPage - 1;
+        history.replaceState(null, '', `?tab=${tabKey}&page=${nextPage}`);
+        renderTab(tabKey, nextPage);
+      }
+    });
+    container.appendChild(prevBtn);
+
+    for (let pageNumber = 1; pageNumber <= totalPages; pageNumber += 1) {
+      const pageBtn = document.createElement('button');
+      pageBtn.type = 'button';
+      pageBtn.className = `pagination__button pagination__button--page ${pageNumber === currentPage ? 'pagination__button--active' : ''}`;
+      pageBtn.textContent = String(pageNumber);
+      pageBtn.setAttribute('aria-current', pageNumber === currentPage ? 'page' : 'false');
+      pageBtn.addEventListener('click', () => {
+        history.replaceState(null, '', `?tab=${tabKey}&page=${pageNumber}`);
+        renderTab(tabKey, pageNumber);
+      });
+      container.appendChild(pageBtn);
+    }
+
+    const nextBtn = document.createElement('button');
+    nextBtn.type = 'button';
+    nextBtn.className = 'pagination__button';
+    nextBtn.textContent = 'Next';
+    nextBtn.disabled = currentPage === totalPages;
+    nextBtn.addEventListener('click', () => {
+      if (currentPage < totalPages) {
+        const nextPage = currentPage + 1;
+        history.replaceState(null, '', `?tab=${tabKey}&page=${nextPage}`);
+        renderTab(tabKey, nextPage);
+      }
+    });
+    container.appendChild(nextBtn);
+  }
+
+  function renderTab(tabKey, page = 1) {
+    const tabsMap = {
+      fixtures: { cards: fixtureCards, container: fixturesPagination },
+      results: { cards: resultCards, container: resultsPagination },
+    };
+
+    const activeTab = tabsMap[tabKey];
+    if (!activeTab) return;
+
+    const totalPages = Math.max(1, Math.ceil(activeTab.cards.length / pageSize));
+    const safePage = Math.min(Math.max(page, 1), totalPages);
+
+    updateCardVisibility(activeTab.cards, safePage);
+    renderPagination(activeTab.container, activeTab.cards, safePage, totalPages, tabKey);
 
     document.querySelectorAll('.tab-panel').forEach(panel => {
       const isActive = panel.id === `tab-${tabKey}`;
       panel.classList.toggle('active', isActive);
+    });
+
+    tabs.forEach(t => {
+      const isActive = t.dataset.tab === tabKey;
+      t.classList.toggle('active', isActive);
+      t.setAttribute('aria-selected', String(isActive));
     });
   }
 
@@ -74,13 +154,12 @@ function formatDate(dateStr: string) {
     btn.addEventListener('click', () => {
       const tabKey = btn.dataset.tab;
       if (!tabKey) return;
-      history.pushState(null, '', `#${tabKey}`);
-      activateTab(tabKey);
+      history.replaceState(null, '', `?tab=${tabKey}&page=1`);
+      renderTab(tabKey, 1);
     });
   });
 
-  const initialTab = window.location.hash.replace('#', '') || 'fixtures';
-  if (tabs.length) {
-    activateTab(initialTab);
-  }
+  const initialTab = new URLSearchParams(window.location.search).get('tab') === 'results' ? 'results' : 'fixtures';
+  const initialPage = Number(new URLSearchParams(window.location.search).get('page') || '1');
+  renderTab(initialTab, initialPage);
 </script>
