@@ -111,12 +111,12 @@ h3 { font-size: 1.25rem; }
 .fixture-meta {
   color: var(--grey-mid);
   font-size: 0.8rem;
-  margin-bottom: 0.75rem;
+  /*margin-bottom: 0.75rem;*/
 }
 .fixture-score {
   font-size: 1.05rem;
   font-weight: 700;
-  margin-bottom: 0.4rem;
+  margin-top: 0.4rem; 
 }
 .fixture-venue {
   font-size: 0.8rem;
@@ -384,7 +384,7 @@ h3 { font-size: 1.25rem; }
 /* =============================================
    Section wrapper
    ============================================= */
-.section { padding: 3.5rem 0; }
+.section { padding: 1.5rem 0; }
 .section--alt { background: var(--off-white); padding-top: 1.75rem; }
 .section--dark { background: var(--green-dark); color: var(--white); }
 .section-header { margin-bottom: 2rem; }
@@ -999,7 +999,7 @@ h3 { font-size: 1.25rem; }
   box-shadow: inset 0 0 0 1px rgba(17, 61, 31, 0.04);
 }
 .info-card h3 { margin-bottom: 0.5rem; }
-.info-card p { color: var(--grey-mid); font-size: 0.9rem; margin-bottom: 1.25rem; }
+.info-card p { color: var(--grey-mid); font-size: 0.9rem; /*margin-bottom: 1.25rem;*/ }
 
 .cta-bar {
   background: var(--green-dark);
