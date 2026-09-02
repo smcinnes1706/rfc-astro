@@ -95,7 +95,34 @@ function buildTabPageHref(tab: 'fixtures' | 'results', page: number) {
     });
     container.appendChild(prevBtn);
 
-    for (let pageNumber = 1; pageNumber <= totalPages; pageNumber += 1) {
+    const pageItems = totalPages <= 5
+      ? Array.from({ length: totalPages }, (_, index) => index + 1)
+      : [
+          Math.max(1, currentPage <= 3 ? 1 : currentPage - 2),
+          Math.max(1, currentPage <= 3 ? 2 : currentPage - 1),
+          currentPage,
+          currentPage + 1,
+          totalPages,
+        ]
+        .filter((pageNumber, index, pages) => pages.indexOf(pageNumber) === index)
+        .filter(pageNumber => pageNumber <= totalPages)
+        .sort((firstPage, secondPage) => firstPage - secondPage)
+        .reduce((items, pageNumber, index, pages) => {
+          if (index > 0 && pageNumber - pages[index - 1] > 1) items.push('...');
+          items.push(pageNumber);
+          return items;
+        }, []);
+
+    pageItems.forEach(pageItem => {
+      if (pageItem === '...') {
+        const ellipsis = document.createElement('span');
+        ellipsis.className = 'pagination__ellipsis';
+        ellipsis.textContent = '...';
+        container.appendChild(ellipsis);
+        return;
+      }
+
+      const pageNumber = pageItem;
       const pageBtn = document.createElement('button');
       pageBtn.type = 'button';
       pageBtn.className = `pagination__button pagination__button--page ${pageNumber === currentPage ? 'pagination__button--active' : ''}`;
@@ -106,7 +133,7 @@ function buildTabPageHref(tab: 'fixtures' | 'results', page: number) {
         renderTab(tabKey, pageNumber);
       });
       container.appendChild(pageBtn);
-    }
+    });
 
     const nextBtn = document.createElement('button');
     nextBtn.type = 'button';
