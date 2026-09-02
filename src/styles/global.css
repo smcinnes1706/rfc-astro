@@ -568,6 +568,14 @@ h3 { font-size: 1.25rem; }
   transition: background var(--transition), border-color var(--transition), color var(--transition);
 }
 
+.pagination__button--chevron {
+  width: 2.2rem;
+  min-width: 2.2rem;
+  padding: 0.35rem;
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
 .pagination__button:hover:not(.pagination__button--disabled) {
   background: var(--green-pale);
   border-color: rgba(27, 67, 50, 0.42);
@@ -596,6 +604,25 @@ h3 { font-size: 1.25rem; }
   justify-content: center;
   color: var(--grey-mid);
   font-weight: 700;
+}
+
+.pagination__page-info {
+  display: none;
+  color: var(--grey-mid);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+@media (max-width: 319px) {
+  .pagination__button--page,
+  .pagination__ellipsis {
+    display: none;
+  }
+
+  .pagination__page-info {
+    display: inline-flex;
+    align-items: center;
+  }
 }
 
 /* =============================================

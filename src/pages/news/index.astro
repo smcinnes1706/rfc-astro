@@ -69,12 +69,12 @@ function formatDate(dateStr: string) {
 </Layout>
 
 <script>
-  const newsCards = Array.from(document.querySelectorAll('[data-news-card]'));
+  const newsCards = Array.from(document.querySelectorAll<HTMLElement>('[data-news-card]'));
   const newsGrid = document.querySelector<HTMLElement>('.news-grid');
   const pagination = document.getElementById('news-pagination');
   let currentPage = Number(new URLSearchParams(window.location.search).get('page') || '1');
 
-  function renderNewsPage(page) {
+  function renderNewsPage(page: number) {
     if (!pagination) return;
 
     const columnCount = newsGrid ? getComputedStyle(newsGrid).gridTemplateColumns.split(' ').length : 1;
@@ -93,7 +93,7 @@ function formatDate(dateStr: string) {
     pagination.innerHTML = '';
     if (totalPages <= 1) return;
 
-    const pageItems = totalPages <= 5
+    const pageItems: Array<number | string> = totalPages <= 5
       ? Array.from({ length: totalPages }, (_, index) => index + 1)
       : [
           Math.max(1, safePage <= 3 ? 1 : safePage - 2),
@@ -105,7 +105,7 @@ function formatDate(dateStr: string) {
         .filter((pageNumber, index, pages) => pages.indexOf(pageNumber) === index)
         .filter(pageNumber => pageNumber <= totalPages)
         .sort((firstPage, secondPage) => firstPage - secondPage)
-        .reduce((items, pageNumber, index, pages) => {
+        .reduce<Array<number | string>>((items, pageNumber, index, pages) => {
           if (index > 0 && pageNumber - pages[index - 1] > 1) items.push('...');
           items.push(pageNumber);
           return items;
@@ -113,8 +113,9 @@ function formatDate(dateStr: string) {
 
     const prevBtn = document.createElement('button');
     prevBtn.type = 'button';
-    prevBtn.className = 'pagination__button';
-    prevBtn.textContent = 'Previous';
+    prevBtn.className = 'pagination__button pagination__button--chevron';
+    prevBtn.textContent = '‹';
+    prevBtn.setAttribute('aria-label', 'Previous page');
     prevBtn.disabled = safePage === 1;
     prevBtn.addEventListener('click', () => {
       if (safePage > 1) {
@@ -125,6 +126,11 @@ function formatDate(dateStr: string) {
     });
     pagination.appendChild(prevBtn);
 
+    const pageInfo = document.createElement('span');
+    pageInfo.className = 'pagination__page-info';
+    pageInfo.textContent = `Page ${safePage} of ${totalPages}`;
+    pagination.appendChild(pageInfo);
+
     pageItems.forEach(pageItem => {
       if (pageItem === '...') {
         const ellipsis = document.createElement('span');
@@ -134,7 +140,7 @@ function formatDate(dateStr: string) {
         return;
       }
 
-      const pageNumber = pageItem;
+      const pageNumber = pageItem as number;
       const pageBtn = document.createElement('button');
       pageBtn.type = 'button';
       pageBtn.className = `pagination__button pagination__button--page ${pageNumber === safePage ? 'pagination__button--active' : ''}`;
@@ -149,8 +155,9 @@ function formatDate(dateStr: string) {
 
     const nextBtn = document.createElement('button');
     nextBtn.type = 'button';
-    nextBtn.className = 'pagination__button';
-    nextBtn.textContent = 'Next';
+    nextBtn.className = 'pagination__button pagination__button--chevron';
+    nextBtn.textContent = '›';
+    nextBtn.setAttribute('aria-label', 'Next page');
     nextBtn.disabled = safePage === totalPages;
     nextBtn.addEventListener('click', () => {
       if (safePage < totalPages) {

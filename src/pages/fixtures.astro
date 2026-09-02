@@ -61,12 +61,12 @@ function buildTabPageHref(tab: 'fixtures' | 'results', page: number) {
 <script>
   const tabs = document.querySelectorAll<HTMLButtonElement>('.tab-btn');
   const pageSize = 6;
-  const fixtureCards = Array.from(document.querySelectorAll('#tab-fixtures [data-fixture-card]'));
-  const resultCards = Array.from(document.querySelectorAll('#tab-results [data-result-card]'));
+  const fixtureCards = Array.from(document.querySelectorAll<HTMLElement>('#tab-fixtures [data-fixture-card]'));
+  const resultCards = Array.from(document.querySelectorAll<HTMLElement>('#tab-results [data-result-card]'));
   const fixturesPagination = document.getElementById('fixtures-pagination');
   const resultsPagination = document.getElementById('results-pagination');
 
-  function updateCardVisibility(cards, activePage) {
+  function updateCardVisibility(cards: HTMLElement[], activePage: number) {
     const start = (activePage - 1) * pageSize;
     const end = start + pageSize;
 
@@ -75,7 +75,7 @@ function buildTabPageHref(tab: 'fixtures' | 'results', page: number) {
     });
   }
 
-  function renderPagination(container, cards, currentPage, totalPages, tabKey) {
+  function renderPagination(container: HTMLElement | null, cards: HTMLElement[], currentPage: number, totalPages: number, tabKey: 'fixtures' | 'results') {
     if (!container) return;
 
     container.innerHTML = '';
@@ -83,8 +83,9 @@ function buildTabPageHref(tab: 'fixtures' | 'results', page: number) {
 
     const prevBtn = document.createElement('button');
     prevBtn.type = 'button';
-    prevBtn.className = 'pagination__button';
-    prevBtn.textContent = 'Previous';
+    prevBtn.className = 'pagination__button pagination__button--chevron';
+    prevBtn.textContent = '‹';
+    prevBtn.setAttribute('aria-label', 'Previous page');
     prevBtn.disabled = currentPage === 1;
     prevBtn.addEventListener('click', () => {
       if (currentPage > 1) {
@@ -95,7 +96,12 @@ function buildTabPageHref(tab: 'fixtures' | 'results', page: number) {
     });
     container.appendChild(prevBtn);
 
-    const pageItems = totalPages <= 5
+    const pageInfo = document.createElement('span');
+    pageInfo.className = 'pagination__page-info';
+    pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+    container.appendChild(pageInfo);
+
+    const pageItems: Array<number | string> = totalPages <= 5
       ? Array.from({ length: totalPages }, (_, index) => index + 1)
       : [
           Math.max(1, currentPage <= 3 ? 1 : currentPage - 2),
@@ -107,7 +113,7 @@ function buildTabPageHref(tab: 'fixtures' | 'results', page: number) {
         .filter((pageNumber, index, pages) => pages.indexOf(pageNumber) === index)
         .filter(pageNumber => pageNumber <= totalPages)
         .sort((firstPage, secondPage) => firstPage - secondPage)
-        .reduce((items, pageNumber, index, pages) => {
+        .reduce<Array<number | string>>((items, pageNumber, index, pages) => {
           if (index > 0 && pageNumber - pages[index - 1] > 1) items.push('...');
           items.push(pageNumber);
           return items;
@@ -122,7 +128,7 @@ function buildTabPageHref(tab: 'fixtures' | 'results', page: number) {
         return;
       }
 
-      const pageNumber = pageItem;
+      const pageNumber = pageItem as number;
       const pageBtn = document.createElement('button');
       pageBtn.type = 'button';
       pageBtn.className = `pagination__button pagination__button--page ${pageNumber === currentPage ? 'pagination__button--active' : ''}`;
@@ -137,8 +143,9 @@ function buildTabPageHref(tab: 'fixtures' | 'results', page: number) {
 
     const nextBtn = document.createElement('button');
     nextBtn.type = 'button';
-    nextBtn.className = 'pagination__button';
-    nextBtn.textContent = 'Next';
+    nextBtn.className = 'pagination__button pagination__button--chevron';
+    nextBtn.textContent = '›';
+    nextBtn.setAttribute('aria-label', 'Next page');
     nextBtn.disabled = currentPage === totalPages;
     nextBtn.addEventListener('click', () => {
       if (currentPage < totalPages) {
@@ -150,7 +157,7 @@ function buildTabPageHref(tab: 'fixtures' | 'results', page: number) {
     container.appendChild(nextBtn);
   }
 
-  function renderTab(tabKey, page = 1) {
+  function renderTab(tabKey: 'fixtures' | 'results', page = 1) {
     const tabsMap = {
       fixtures: { cards: fixtureCards, container: fixturesPagination },
       results: { cards: resultCards, container: resultsPagination },
@@ -180,7 +187,7 @@ function buildTabPageHref(tab: 'fixtures' | 'results', page: number) {
   tabs.forEach(btn => {
     btn.addEventListener('click', () => {
       const tabKey = btn.dataset.tab;
-      if (!tabKey) return;
+      if (tabKey !== 'fixtures' && tabKey !== 'results') return;
       history.replaceState(null, '', `?tab=${tabKey}&page=1#${tabKey}`);
       renderTab(tabKey, 1);
     });
