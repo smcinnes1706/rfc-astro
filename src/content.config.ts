@@ -18,7 +18,7 @@ const newsSchema = z.object({
   title: z.string(),
   date: z.string(),
   author: z.string(),
-  category: z.enum(['match-report', 'club-news', 'juniors']),
+  category: z.string(),
   excerpt: z.string(),
   team: z.enum(['first', 'reserves', 'veterans']).optional(),
   image: z.string().optional(),

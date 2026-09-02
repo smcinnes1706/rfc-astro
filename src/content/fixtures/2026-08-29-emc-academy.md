@@ -7,4 +7,5 @@ competition: "Mid Sussex League Premier"
 venue: "Whyteleafe Football Groun"
 isHome: false
 team: first
+result: "1-1"
 ---

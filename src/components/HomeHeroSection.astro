@@ -1,6 +1,6 @@
 ---
 interface Props {
-  heroImage: string | null;
+  heroImages: string[];
   nextFixture: {
     date: string;
     time: string;
@@ -14,16 +14,33 @@ interface Props {
   formatDate: (dateStr: string) => string;
 }
 
-const { heroImage, nextFixture, fixtureTeamMetaByKey, formatDate } = Astro.props as Props;
+const { heroImages, nextFixture, fixtureTeamMetaByKey, formatDate } = Astro.props as Props;
 ---
 
-{heroImage && (
-  <div class="container" style="padding-top:1.5rem; padding-bottom:0; position:relative; line-height:0;">
-    <img
-      src={heroImage}
-      alt="Rotherfield FC"
-      style="width:100%; max-height:480px; object-fit:cover; object-position:center; display:block; border-radius:10px;"
-    />
+{heroImages.length > 0 && (
+  <div class="container hero-gallery" style="padding-top:1.5rem; padding-bottom:0;">
+    <div class="hero-gallery__frame">
+      {heroImages.map((image, index) => (
+        <img
+          src={image}
+          alt={`Rotherfield FC ${index + 1}`}
+          class={`hero-gallery__image${index === 0 ? ' hero-gallery__image--active' : ''}`}
+          data-hero-image
+          data-index={index}
+        />
+      ))}
+      {heroImages.length > 1 && (
+        <div class="hero-gallery__controls" aria-label="Hero image controls">
+          <button type="button" class="hero-gallery__arrow" data-hero-previous aria-label="Previous hero image">&#8592;</button>
+          <div class="hero-gallery__dots">
+            {heroImages.map((_, index) => (
+              <button type="button" class={`hero-gallery__dot${index === 0 ? ' hero-gallery__dot--active' : ''}`} data-hero-dot={index} aria-label={`Show hero image ${index + 1}`} aria-current={index === 0 ? 'true' : undefined}></button>
+            ))}
+          </div>
+          <button type="button" class="hero-gallery__arrow" data-hero-next aria-label="Next hero image">&#8594;</button>
+        </div>
+      )}
+    </div>
     {nextFixture && (
       <div class="hero-badge hero-badge--overlay">
         <p class="fixture-label">Next Fixture</p>
@@ -39,7 +56,7 @@ const { heroImage, nextFixture, fixtureTeamMetaByKey, formatDate } = Astro.props
   </div>
 )}
 
-{!heroImage && nextFixture && (
+{heroImages.length === 0 && nextFixture && (
   <div class="container" style="padding-top:1.5rem; padding-bottom:0;">
     <div class="hero-badge hero-badge--standalone">
       <p class="fixture-label">Next Fixture</p>
@@ -52,4 +69,41 @@ const { heroImage, nextFixture, fixtureTeamMetaByKey, formatDate } = Astro.props
       <p class="fixture-comp">{nextFixture.competition}</p>
     </div>
   </div>
+)}
+
+{heroImages.length > 1 && (
+  <script>
+    const images = Array.from(document.querySelectorAll<HTMLElement>('[data-hero-image]'));
+    const dots = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-hero-dot]'));
+    const gallery = document.querySelector<HTMLElement>('.hero-gallery');
+    let activeIndex = 0;
+    let rotation: number | undefined;
+
+    function showImage(index: number) {
+      activeIndex = (index + images.length) % images.length;
+      images.forEach((image, imageIndex) => image.classList.toggle('hero-gallery__image--active', imageIndex === activeIndex));
+      dots.forEach((dot, dotIndex) => {
+        const isActive = dotIndex === activeIndex;
+        dot.classList.toggle('hero-gallery__dot--active', isActive);
+        dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+      });
+    }
+
+    function startRotation() {
+      rotation = window.setInterval(() => showImage(activeIndex + 1), 7000);
+    }
+
+    function stopRotation() {
+      if (rotation) window.clearInterval(rotation);
+    }
+
+    document.querySelector('[data-hero-previous]')?.addEventListener('click', () => showImage(activeIndex - 1));
+    document.querySelector('[data-hero-next]')?.addEventListener('click', () => showImage(activeIndex + 1));
+    dots.forEach(dot => dot.addEventListener('click', () => showImage(Number(dot.dataset.heroDot))));
+    gallery?.addEventListener('mouseenter', stopRotation);
+    gallery?.addEventListener('mouseleave', startRotation);
+    gallery?.addEventListener('focusin', stopRotation);
+    gallery?.addEventListener('focusout', startRotation);
+    startRotation();
+  </script>
 )}

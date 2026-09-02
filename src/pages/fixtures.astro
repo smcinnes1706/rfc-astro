@@ -154,12 +154,13 @@ function buildTabPageHref(tab: 'fixtures' | 'results', page: number) {
     btn.addEventListener('click', () => {
       const tabKey = btn.dataset.tab;
       if (!tabKey) return;
-      history.replaceState(null, '', `?tab=${tabKey}&page=1`);
+      history.replaceState(null, '', `?tab=${tabKey}&page=1#${tabKey}`);
       renderTab(tabKey, 1);
     });
   });
 
-  const initialTab = new URLSearchParams(window.location.search).get('tab') === 'results' ? 'results' : 'fixtures';
-  const initialPage = Number(new URLSearchParams(window.location.search).get('page') || '1');
+  const params = new URLSearchParams(window.location.search);
+  const initialTab = params.get('tab') === 'results' || window.location.hash === '#results' ? 'results' : 'fixtures';
+  const initialPage = Number(params.get('page') || '1');
   renderTab(initialTab, initialPage);
 </script>

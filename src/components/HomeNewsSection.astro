@@ -34,9 +34,11 @@ const categoryBadgeClass: Record<string, string> = {
           </a>
           <div class="card__body news-card__body">
             <div class="news-card__meta">
-              <span class={`badge ${categoryBadgeClass[entry.data.category] ?? 'badge--club-news'}`}>
-                {categoryLabel[entry.data.category]}
-              </span>
+                {entry.data.category && (
+                  <span class={`badge ${categoryBadgeClass[entry.data.category] ?? 'badge--club-news'}`}>
+                    {categoryLabel[entry.data.category]}
+                  </span>
+                )}
               {entry.data.team && (
                 <span class={`badge ${fixtureTeamMetaByKey[entry.data.team].badgeClass}`}>{fixtureTeamMetaByKey[entry.data.team].label}</span>
               )}

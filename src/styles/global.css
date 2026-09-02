@@ -352,6 +352,59 @@ h3 { font-size: 1.25rem; }
   display: inline-block;
   color: white;
 }
+.hero-gallery {
+  position: relative;
+}
+.hero-gallery__frame {
+  position: relative;
+  height: min(480px, 52vw);
+  min-height: 260px;
+  overflow: hidden;
+  border-radius: 10px;
+  line-height: 0;
+  background: var(--green-dark);
+}
+.hero-gallery__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+.hero-gallery__image--active { opacity: 1; }
+.hero-gallery__controls {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  line-height: 1;
+}
+.hero-gallery__arrow,
+.hero-gallery__dot {
+  border: 1px solid rgba(255,255,255,0.7);
+  background: rgba(0,0,0,0.45);
+  color: var(--white);
+  cursor: pointer;
+}
+.hero-gallery__arrow {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  font-size: 1rem;
+}
+.hero-gallery__dots { display: flex; gap: 0.35rem; }
+.hero-gallery__dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  padding: 0;
+  border-radius: 50%;
+}
+.hero-gallery__dot--active { background: var(--white); }
 .hero-badge .fixture-label {
   font-size: 0.7rem;
   text-transform: uppercase;
